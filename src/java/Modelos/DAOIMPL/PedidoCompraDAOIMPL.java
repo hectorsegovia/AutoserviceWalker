@@ -39,8 +39,8 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
         int idPedido;
         try {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
-            query = "INSERT INTO pedidos(id_pedido, fecha, id_sucursal, id_usuario, observacion, estado)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            query = "INSERT INTO pedidos(fecha, id_sucursal, id_usuario, observacion, estado)\n"
+                    + "VALUES (?, ?, ?, ?, ?, ?);";
             ps = ConexionDB.getRutaConexion().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, dto.getId_pedido());
             ps.setDate(2, Genericos.Genericos.retornarFecha(dto.getFecha()));
@@ -155,15 +155,14 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
         try {
             List<MercaderiaDTO> lista;
             MercaderiaDTO dto;
-            query = "SELECT st.id_mercaderia, me.descripcion, cantidad FROM mercaderias me, stock st, depositos dep where me.id_mercaderia=st.id_mercaderia\n"
-                    + "and dep.id_deposito = st.id_deposito\n"
-                    + " ORDER BY id_mercaderia;";
+            query = "SELECT st.codigo_barra, me.descripcion, cantidad FROM mercaderias me, stock st where me.codigo_barra=st.codigo_barra\n"
+                    + "ORDER BY codigo_barra;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("id_mercaderia"));
+                dto.setId_mercaderia(rs.getInt("codigo_barra"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 dto.setCantidadd(rs.getInt("cantidad"));
                 lista.add(dto);

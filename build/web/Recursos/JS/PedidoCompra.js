@@ -120,8 +120,6 @@ function agregarFilaPedidos() {
     var cod = document.getElementById('id_mercaderia').value;
     var des = document.getElementById('descrip_mercaderia').value;
     var cant = document.getElementById('cantidad').value;
-    var depo = document.getElementById('id_deposito').value;
-    var descri = document.getElementById('descripcion').value;
 //    var precio = document.getElementById('precio_articulo').value;
 //    var calculo = cant * precio;
 
@@ -133,8 +131,6 @@ function agregarFilaPedidos() {
             <td style=' width: 5%;'>" + cod + "</td>\n\
             <td style=' width: 60%;'>" + des + "</td>\n\
             <td style=' width: 5%;'>" + cant + "</td>\n\
-            <td style=' width: 5%;'>" + depo + "</td>\n\
-            <td style=' width: 5%;'>" + descri + "</td>\n\
             <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\')updateMonto(" + tindex + ")\" src='../Recursos/img/update.png'/></td>\n\
             <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + tindex + ")\" src='../Recursos/img/delete.png'/></td>\n\
       </tr>");
@@ -159,8 +155,7 @@ function prepararJsonPedidos(ban) {
         //push => Agrega un nuevo elemento al Array [listaProductos]
         listamercaderia.push({
             id_mercaderia: $(this).find("td").eq(0).html(),
-            cantidad: $(this).find("td").eq(2).html(),
-            id_deposito: $(this).find("td").eq(3).html()
+            cantidad: $(this).find("td").eq(2).html()
 //            monto: $(this).find("td").eq(3).html()
         });
     });
