@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>REGISTRO DE EMPLEADOS</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="Recursos\img\ic.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js" ></script>
+        <script src="../Recursos/JS/Mercaderia.js" ></script>
+    </head>
+    <body  class="w3-border-cyan">
+    <center>
+        <div style=" width: 800px;">
+            <div  style="width:800px; height: 600px;">
+                <div class="w3-container">
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width: 800px;  margin: 0 auto; ">
+                        <div class="w3-panel w3-card w3-blue-grey" style="width: 750px; height: 80px;">
+                            <h4 class="w3-center">REGISTRO DE MERCADERIAS</h4>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Codigo:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="id_mercaderia" onkeypress="keypress(event)" placeholder="Valor Autogenerado" size="10"   required="true" >
+                                </div>
+                            </div>
+
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Codigo:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="codigo_barra" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('descripcion').disabled = false;
+                                                document.getElementById('descripcion').focus();
+                                            }" placeholder="CODIGO DE BARRA" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Descripcion:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input class="w3-left w3-input w3-round w3-border" type="text" id="descripcion" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('unidad').disabled = false;
+                                                document.getElementById('unidad').focus();
+                                            }" placeholder="DESCRIPCION" size="40"  required="true" >
+                                </div>
+                            </div>
+
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Unidad:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="unidad" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('id_medida').disabled = false;
+                                                document.getElementById('id_medida').focus();
+                                            }" placeholder="UNIDAD" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">U. Medida:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_medida"></select>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Precio:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="precio" onkeypress="keypress(event)" placeholder="PRECIO" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Marca:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_marca" ></select>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Sabor:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_sabor" ></select>
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Categoria:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_categoria" ></select>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Sub Categoria:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_subcategoria" ></select>
+                                </div>
+
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Familia:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select  class="w3-left w3-input w3-round w3-border" id="id_familia"></select>
+                                </div>
+
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style=" width: 13%; ">
+                                        <p class="w3-small w3-right">
+                                            <label class="w3-label w3-validate">Tipo Familia:&nbsp;</label>
+                                        </p>
+                                    </div>
+                                    <div  class="w3-col s4 w3-center">
+                                        <select  class="w3-left w3-input w3-round w3-border" id="id_tifamilia"></select>
+                                    </div>
+                                    <div class="w3-col" style=" width: 13%; ">
+                                        <p class="w3-small w3-right">
+                                            <label class="w3-label w3-validate">Impuesto:&nbsp;</label>
+                                        </p>
+                                    </div>
+                                    <div  class="w3-col s4 w3-center">
+                                        <select  class="w3-left w3-input w3-round w3-border" id="id_impuesto"></select>
+                                    </div>
+
+                                </div>
+
+                                <center>
+                                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="agregarMercaderias();" id="opc_cancelar" name="opc_cancelar">
+                                        <i class="fa fa-close fa-lg"></i>
+                                        Agregar
+                                    </button>
+                                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick="document.getElementById('id01').style.display = 'block'; modificarMercaderias();" type="button">
+                                        <i class="fa fa-close fa-lg"></i>
+                                        Modificar
+                                    </button>
+                                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="document.getElementById('id01').style.display = 'block'; eliminarMercaderias();">
+                                        <i class="fa fa-close fa-lg"></i>
+                                        Eliminar
+                                    </button>
+                                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarMercaderias();">
+                                        <i class="fa fa-close fa-lg"></i>
+                                        Guardar
+                                    </button> 
+                                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limpieezae();">
+                                        <i class="fa fa-close fa-lg"></i>
+                                        Cancelar
+                                    </button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </center>
+                <br>
+                <div id="id01" class="w3-modal w3-white">
+                    <div class="w3-container">
+                        <center>
+                            <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                                <div class="w3-panel w3-card w3-blue-grey">
+                                    <h2 class="w3-center">LISTADO DE mercaderias</h2>
+                                    <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                                </div>
+                                <div class="w3-container w3-white" id="cont_datos" style=" margin:0 30% 3% 5%;">
+                                    <div  style="width: 700px; height: 200px;" onclick="document.getElementById('id_mercaderia').focus();"/>
+                                    <table style="border: 8px"> 
+                                        <thead>
+                                            <tr>
+                                                <th  style=" width: 3%;">Id</th>
+                                                <th  style=" width: 23%;">Codigo de Barra</th>
+                                                <th  style=" width: 27%;">Descripcion</th>
+                                                <th  style=" width: 10%;">Precio</th>
+                                                <th  style=" width: 10%;">Marca</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="crpTbMercaderias">
+                                        </tbody>
+                                    </table>  
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                
+                                <div  class="w3-col s5 w3-center">
+                                    <input type="text" id="filtrosmercaderias" placeholder="Codigo de Barra..." size="20" tabindex="2" onkeyup="FiltroMercaderias();">
+                                </div>
+                                <div  class="w3-col s5 w3-center">
+                                    <input type="text" id="filtrosmercaderiass" placeholder="Descripcion..." size="20" tabindex="2" onkeyup="FiltroMercaderiass();">
+                                    <button onclick="cerrarbuscador();">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+    </body>
+</html>

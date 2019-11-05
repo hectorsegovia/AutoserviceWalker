@@ -1,0 +1,152 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Recursos/CSS/w3_4.css">
+        <script src="../Recursos/JS/jquery-3.2.1.min.js"></script>
+        <script src="../Recursos/JS/Tipo_cobrojs.js"></script>
+    </head>
+    <!--<body style="background-color: #00bcd4">-->
+
+    <body>
+        <script>
+            function sololetras(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "  áéíóúqwertyuiopasdfghjklñzxcvbnm";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+
+        <script>
+            function SoloNumPositivos(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "0123456789";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+        <br>
+        <br>
+        <div class="pl-light-grey" id="_geco_sticky_main"><div class="w3-container w3-white" id="cont_registrar" style=" margin:0 5% 3% 5%;">
+
+                <form class="w3-container" name="form_registrar" action="/registrar.geco" method="POST" enctype="multipart/form-data">
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width:750px; margin:0 auto;">
+                        <div class="w3-panel w3-card w3-blue-grey">
+                            <h2 class="w3-center">REGISTRO TIPO DE COBROS</h2>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+
+                            <div class="w3-container"><div class="w3-row w3-section">
+<!--                                    <button class="w3-button w3-large" onclick="document.getElementById('id01').style.display = 'block';">
+                                        Buscar
+                                    </button>
+                                    <br>-->
+
+                                    <div class="w3-col" style=" width:30%;">
+                                        <p class="w3-small w3-right">
+                                            <label class="w3-label w3-validate">ID:&nbsp;</label>
+                                        </p>
+                                    </div>
+                                    <div class="w3-rest" onkeypress="return SoloNumPositivos(event)">
+                                        <input class="w3-input" type="text" id="id_tipocobro" name="Cargo" placeholder="Ingrese el Codigo..." size="80" onkeypress="
+                                                if (event.keyCode === 13) {
+                                                    recuperarTipocobroUnico();
+                                                }" tabindex="2" value required >
+                                    </div>
+                                </div></div>
+                            <div class="w3-col" style=" width:30%;">
+                                <p class="w3-small w3-right">
+                                    <label class="w3-label w3-validate">Descripcion:&nbsp;</label>
+                                </p>
+                            </div>
+                            <div class="w3-rest">
+                                <input class="w3-input" type="text" id="descripcion" name="descripcion" placeholder="Tipo Cobros..." size="80" tabindex="2"  onkeypress="return sololetras(event)">
+                            </div>
+                        </div>
+    <center>
+<!--        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">-->
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="agregarTipocobro();" id="opc_cancelar" name="opc_cancelar">
+                <i class="fa fa-close fa-lg"></i>
+                Agregar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick="document.getElementById('id01').style.display = 'block'; modificarTipocobro(); filtrotipocobrofocus()" type="button">
+                <i class="fa fa-close fa-lg"></i>
+                Modificar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="document.getElementById('id01').style.display = 'block'; eliminarTipocobro(); filtrotipocobrofocus()">
+                <i class="fa fa-close fa-lg"></i>
+                Eliminar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarTipocobro();">
+                <i class="fa fa-close fa-lg"></i>
+                Guardar
+            </button> 
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limmm();">
+                <i class="fa fa-close fa-lg"></i>
+                Cancelar
+            </button> 
+        </div>
+    </center>
+                        </div>
+                </form>
+            </div>
+        </div><br>
+    <br> 
+
+    <div id="id01" class="w3-modal w3-white">
+        <div class="w3-container">
+            <center>
+                <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">
+                    <div class="w3-panel w3-card w3-blue-grey">
+                        <h2 class="w3-center">LISTADO DE TIPO COBROS</h2>
+                        <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                    </div>
+                    <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                        <div  style="width: 500px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                        <table style="border: 1px"> 
+                            <thead>
+                                <tr>
+                                    <th  class="w3-white" style=" width: 5%;">Codigo</th>
+                                    <th class="w3-white" style=" width: 30%;">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crpTbTipocobro">
+                            </tbody>
+                        </table>  
+                    </div>
+                </div>
+                <input type="text" id="filtrostipocobro" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroTipocobro();">
+                <button onclick="cerrarbuscador();">
+                    Cancelar
+                </button>
+            </center>
+        </div>
+    </div>
+</body>
+</html>

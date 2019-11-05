@@ -1,0 +1,914 @@
+
+<!DOCTYPE html>
+<html>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <script src="Recursos/JS/PaginaWebjs.js"></script>
+    <script src="Recursos/JS/jquery-3.2.1.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Recursos/CSS/w3.css">
+    <link rel="stylesheet" href="Recursos/CSS/font-awesome.min.css">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            document.getElementById('frutas').style.display = "none";
+            document.getElementById('huevos').style.display = "none";
+            document.getElementById('verduras').style.display = "none";
+            document.getElementById('golosinas').style.display = "none";
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            document.getElementById('panelAcceso').style.display = "none";
+        });
+    </script>
+
+    <script type="text/javascript">
+        function abrirfrutas() {
+            document.getElementById('bebidas').style.display = "none";
+            document.getElementById('golosinas').style.display = "none";
+            document.getElementById('verduras').style.display = "none";
+            document.getElementById('huevos').style.display = "none";
+            document.getElementById('frutas').style.display = 'block';
+        }
+
+
+        function abrirbebidas() {
+            document.getElementById('frutas').style.display = "none";
+            document.getElementById('golosinas').style.display = "none";
+            document.getElementById('verduras').style.display = "none";
+            document.getElementById('huevos').style.display = "none";
+            document.getElementById('bebidas').style.display = 'block';
+        }
+
+        function abrirhuevos() {
+            document.getElementById('frutas').style.display = "none";
+            document.getElementById('bebidas').style.display = "none";
+            document.getElementById('golosinas').style.display = "none";
+            document.getElementById('verduras').style.display = "none";
+            document.getElementById('huevos').style.display = 'block';
+        }
+        function abrirverduras() {
+            document.getElementById('frutas').style.display = "none";
+            document.getElementById('bebidas').style.display = "none";
+            document.getElementById('golosinas').style.display = "none";
+            document.getElementById('huevos').style.display = "none";
+            document.getElementById('verduras').style.display = 'block';
+        }
+        function abrirgolosinas() {
+            document.getElementById('frutas').style.display = "none";
+            document.getElementById('bebidas').style.display = "none";
+            document.getElementById('verduras').style.display = "none";
+            document.getElementById('huevos').style.display = "none";
+            document.getElementById('golosinas').style.display = 'block';
+        }
+
+        function Ocultar() {
+            document.getElementById('bebidas').style.display = "none";
+        }
+    </script>
+    <!--    <script type="text/javascript">
+            $(document).ready(function () {
+                document.getElementById('122').style.display = "none";
+            });
+    
+    
+        </script>-->
+
+    <style>
+        .w3-sidebar a {font-family: "Roboto", sans-serif}
+        body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+    </style>
+    <body class="w3-content" style="max-width:100%">
+
+        <footer class="w3-light-grey w3-center" id="paginaweb">
+            <!-- Sidebar/menu -->
+            <nav class="w3-sidebar w3-bar-block w3-black w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+                <div class="w3-container w3-display-container w3-padding-16">
+                    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+                    <img src="Recursos/img/logoautoservice.gif" style="width:100%">
+                    <script language="JavaScript1.2">
+                        var delay = 5000;//pausa (en milisegundos)
+                        var fcontent = new Array();
+                        begintag = '<font face="Arial" size=2>'; //tag que abre los mensajes
+                        fcontent[0] = "Autoservice WALKER";
+                        fcontent[1] = "Autoservice WALKER";
+                        fcontent[2] = "Autoservice WALKER";
+                        closetag = '</font>';
+                        var fwidth = 150; //ancho
+                        var fheight = 150; //alto
+                        //                /No editar/////////////////
+                        var ie4 = document.all && !document.getElementById;
+                        var ns4 = document.layers;
+                        var DOM2 = document.getElementById;
+                        var faderdelay = 0;
+                        var index = 0;
+                        if (DOM2)
+                            faderdelay = 2000;
+                        //function to change content
+                        function changecontent() {
+                            if (index >= fcontent.length)
+                                index = 0;
+                            if (DOM2) {
+                                document.getElementById("fscroller").style.color = "rgb(255,255,255)";
+                                document.getElementById("fscroller").innerHTML = begintag + fcontent[index] + closetag;
+                                colorfade();
+                            } else if (ie4)
+                                document.all.fscroller.innerHTML = begintag + fcontent[index] + closetag;
+                            else if (ns4) {
+                                document.fscrollerns.document.fscrollerns_sub.document.write(begintag + fcontent[index] + closetag);
+                                document.fscrollerns.document.fscrollerns_sub.document.close();
+                            }
+                            index++;
+                            setTimeout("changecontent()", delay + faderdelay);
+                        }
+                        // colorfade() partially by Marcio Galli for Netscape Communications.  ////////////
+                        frame = 20;
+                        hex = 255; // Initial color value.
+                        function colorfade() {
+                            // 20 frames fading process
+                            if (frame > 0) {
+                                hex -= 10; // increase color value
+                                document.getElementById("fscroller").style.color = "rgb(" + hex + "," + hex + "," + hex + ")";// Set color value.
+                                frame--;
+                                setTimeout("colorfade()", 20);
+                            } else {
+                                document.getElementById("fscroller").style.color = "rgb(255,0,0)";
+                                frame = 20;
+                                hex = 255;
+                            }
+                        }
+                        if (ie4 || DOM2)
+                            document.write('<div id="fscroller" style="border:1px solid ;width:' + fwidth + ';height:' + fheight + ';padding:2px"></div>');
+                        window.onload = changecontent
+                    </script><ilayer id="fscrollerns" width=&{fwidth}; height=&{fheight};><layer id="fscrollerns_sub" width=&{fwidth}; height=&{fheight}; left=0 top=0></layer></ilayer>
+
+
+                </div>
+
+                <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+                    <a href="Paginas/AccesoSistema.html" class="w3-bar-item w3-text-white w3-button">Inicia Sesión</a>
+                    <!--<a href="#" class="w3-bar-item w3-text-white w3-button">Categorias</a>-->
+                    <a onclick="myCategorias()" href="javascript:void(0)" class="w3-button w3-block w3-text-white  w3-left-align" id="myBtn">
+                        Categorias <i class="fa fa-caret-down"></i>
+                    </a>
+                    <div id="demoCategorias" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+
+                        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-text-white  w3-left-align" id="myBtn">
+                            Almacen <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Aderezos/Condimentos</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Alimentos Secos</a>
+                            <a onclick="abrirgolosinas()" class="w3-bar-item w3-text-white w3-button">Golosinas</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Café/Té/Yerba</a>
+                        </div>
+                        <a onclick="myABebidas()" href="javascript:void(0)" class="w3-button w3-block w3-text-white w3-left-align" id="myBtn">
+                            Bebidas con Alcohol <i class="fa fa-caret-down"></i>
+                        </a>
+
+                        <div id="demoAccbebidas" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Aperitivos</a>
+                            <a href="#bebidas" class="w3-bar-item w3-text-white w3-button">Bebidas Blancas</a>
+                            <a onclick="abrirbebidas()" class="w3-bar-item w3-text-white w3-button">Cervezas</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Espumantes</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Vinos</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Whiskies</a>
+                            <a href="#" class="w3-bar-item w3-text-white w3-button">Licores</a>
+                        </div>
+
+
+                        <a onclick="myAHuevos()" href="javascript:void(0)" class="w3-button w3-block w3-text-white w3-left-align" id="myBtn">
+                            Frutas/ Verduras/Huevos <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div id="demoAcchuevos" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+                            <a onclick="abrirfrutas()" class="w3-bar-item w3-text-white w3-button">Frutas</a>
+                            <a onclick="abrirverduras()" class="w3-bar-item w3-text-white w3-button">Verduras</a>
+                            <a onclick="abrirhuevos()" class="w3-bar-item w3-text-white w3-button">Huevos</a>
+                        </div>
+
+
+                        <!--                <a href="#" class="w3-bar-item w3-text-white w3-button">Jackets</a>
+                                        <a href="#" class="w3-bar-item w3-text-white w3-button">Gymwear</a>
+                                        <a href="#" class="w3-bar-item w3-text-white w3-button">Blazers</a>
+                                        <a href="#" class="w3-bar-item w3-text-white w3-button">Shoes</a>-->
+                    </div>
+                </div>
+                <a href="#footer" class="w3-bar-item w3-button w3-padding">Contactos</a> 
+                <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display = 'block'"> Infórmate</a> 
+                <a href="#"  class="w3-bar-item w3-button w3-padding">Promociones</a>
+            </nav>
+
+            <!-- Top menu on small screens -->
+            <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+                <div class="w3-bar-item w3-padding-24 w3-wide">LOGO</div>
+                <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+            </header>            
+            <div class="w3-overlay w3-hide-large w3-black" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+            <div class="w3-main w3-black" style="margin-left:18%">
+                <div class="w3-hide-large" style="margin-top:1%"></div>
+                <div class="mySlides w3-display-container w3-center">
+                    <img src="Recursos/img/portadaverdunasnuevooo.jpg" alt="Logo" style="width:115%; height:40%;">
+                    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                    </div>
+                </div>
+                <div class="mySlides w3-display-container w3-center">
+                    <img src="Recursos/img/exhibidor bebidas.jpg" style="height:1%; width:100%;">
+                    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                    </div>
+                </div>
+                <div class="mySlides w3-display-container w3-center">
+                    <img src="Recursos/img/portadagaseosas.jpg" alt="Logo" style="height:1%; width:99%;">
+                    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+                    </div>
+                </div>
+
+
+                <SCRIPT LANGUAGE="JavaScript"> var txt = " Autoservice WALKER...Buscamos que la experiencia de Compras sea muy placentera ";
+                    var espera = 90;
+                    var refresco = null;
+                    function rotulo_title() {
+                        document.title = txt;
+                        txt = txt.substring(1, txt.length) + txt.charAt(0);
+                        refresco = setTimeout("rotulo_title()", espera);
+                    }
+                    rotulo_title();</script>
+                <marquee id="ejemplo" direction="left">Misión... 
+                    Somos una organización con responsabilidad hacia la sociedad, proveedora de productos de alta calidad y bajos precios, creador de empleos e innovador en autoservicios 
+
+
+                    Visión...
+                    Ser reconocidos como una empresa comprometida con el abastecimiento de todo tipo de productos de consumo masivo, que satisfagan las necesidades y preferencias de nuestros clientes. Buscamos que la experiencia de compra sea muy placentera y por eso trabajamos día a día para tener la mejor calidad en nuestros productos, gran variedad y un excelente servicio, logrando así que sigamos siendo la primera y mejor opción de compra..
+
+                </marquee>
+
+
+                <!--             Autoservice WALKER
+                                        <div class="w3-display-container w3-container">
+                                            <img src="" alt="Jeans" style="width:100%">
+                                            <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+                                                <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
+                                                <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
+                                                <h1 class="w3-hide-small">COLLECTION 2016</h1>
+                                                <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">SHOP NOW</a></p>
+                                            </div>
+                                        </div>
+                
+                                        <div class="w3-container w3-text-grey" id="jeans">
+                                            <p>8 items</p>
+                                        </div>-->
+
+                <!-- Product grid -->
+                <footer class="w3-light-grey w3-center" id="bebidas">
+                    <div class="w3-row-padding">
+                        <div class="w3-col">
+                            <div class="w3-row w3-white"> <!--para poner el color del fondo -->
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/champagne.jpg" style="width:83%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>Champagne<br><b>$24.99</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/VODKA BLUEBERI STOLICHNAYA 1LT.jpeg" style="width:59%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>VODKA BLUEBERI STOLICHNAYA 1LT<br><b>$9.99</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/FERNET 1882 750ML BOT.jpeg" style="width:100%">
+                                            <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                            <div class="w3-display-middle w3-display-hover">
+                                                <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                            </div>
+                                        </div>
+                                        <p>FERNET 1882 750ML BOT<br><b>$8.99</b></p>
+                                    </div>
+                                    <br>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/COCKTAIL SAMBA SUL PIÑA 870ML.jpeg" style="width:100%">
+                                        <p>COCKTAIL SAMBA SUL PIÑA 870ML<br><b>$20.50</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/VERMOUTH BIANCO 950ML CINZANO BOTELLA.jpeg" style="width:100%">
+                                        <p>VERMOUTH BIANCO 950ML<br><b>$5.50</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/vodka.jpg" style="width:80%">
+                                            <span class="w3-tag w3-display-topleft">Oferta</span>
+                                            <div class="w3-display-middle w3-display-hover">
+                                                <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                            </div>
+                                        </div>
+                                        <p>Vodka<br><b>$14.99</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/VERMOUTH ROSSO 950ML CINZANO BOTELLA.jpeg" style="width:100%">
+                                        <p>VERMOUTH ROSSO 950ML<br><b>$6.99</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/brahma.jpg" style="width:100%">
+                                        <p>Brahma<br><b>$4.99</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+
+                <footer class="w3-light-grey w3-center" id="frutas">
+                    <div class="w3-row-padding">
+                        <div class="w3-col">
+                            <div class="w3-row w3-white"> <!--para poner el color del fondo -->
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/PERA ARGENTINA.jpeg" style="width:83%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>PERA ARGENTINA<br><b>$2.0 KG</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/MANZANA FUJI.jpeg" style="width:90%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>MANZANA FUJI<br><b>$3.80 KG</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/NARANJA IMPORTADO.png" style="width:81%">
+                                            <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                            <div class="w3-display-middle w3-display-hover">
+                                                <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                            </div>
+                                        </div>
+                                        <p>NARANJA IMPORTADO<br><b>$1.50 KG</b></p>
+                                    </div>
+                                    <br>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/LIMON 1KG REAL.jpeg" style="width:95%">
+                                        <p>LIMON 1KG REAL<br><b>$5.30</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/BANANA CARAPE.jpeg" style="width:120%">
+                                        <p>BANANA CARAPE<br><b>$1.0 KG</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/AGUACATE.png" style="width:85%">
+                                            <span class="w3-tag w3-display-topleft">Oferta</span>
+                                            <div class="w3-display-middle w3-display-hover">
+                                                <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                            </div>
+                                        </div>
+                                        <p>AGUACATE<br><b>$1.00 KG</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/DURAZNO ARGENTINA.jpeg" style="width:82%">
+                                        <p>DURAZNO ARGENTINA<br><b>$6.00 KG</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/LIMA DE PERSIA.jpeg" style="width:90%">
+                                        <p>LIMA DE PERSIA<br><b>$3.00 KG</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                
+                
+                <footer class="w3-light-grey w3-center" id="huevos">
+                    <div class="w3-row-padding">
+                        <div class="w3-col">
+                            <div class="w3-row w3-white"> <!--para poner el color del fondo -->
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/huevosyemita.jpg" style="width:83%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>Huevos Yemita<br><b>$8.0</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/huevosnuevos.jpg" style="width:90%">
+                                        <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                        <div class="w3-display-middle w3-display-hover">
+                                            <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                        <p>Huevos P/ Unidad<br><b>$0.5 Uni</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/huevos2.jpg" style="width:81%">
+                                            <span class="w3-tag w3-display-topleft">Nuevo</span>
+                                            <div class="w3-display-middle w3-display-hover">
+                                                <button class="w3-button w3-black">Comprar <i class="fa fa-shopping-cart"></i></button>
+                                            </div>
+                                        </div>
+                                        <p>HUEVOS IMPORTADO<br><b>$1.50 Unidad</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/gallinasgif.jpg" style="width:81%">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/gallogif.gif" style="width:81%">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                
+                
+                <footer class="w3-light-grey w3-center" id="verduras">
+                    <div class="w3-row-padding">
+                        <div class="w3-col">
+                            <div class="w3-row w3-white"> <!--para poner el color del fondo -->
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/pepino.jpg" style="width:83%">
+                                        <p>Pepino<br><b>$8.0</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/zanahoria.jpg" style="width:100%">
+                                        <p>Zanahoria<br><b>$2.0 KG</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/LOCOTES.jpg" style="width:81%">
+                                        </div>
+                                        <p>LOCOTE IMPORTADO<br><b>$3.50 KG</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/CEBOLLAS.jpg" style="width:65%">
+                                        </div>
+                                        <p>CEBOLLAS IMPORTADO<br><b>$3.50 KG</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/REPOLLO.jpg" style="width:68%">
+                                        </div>
+                                        <p>REPOLLO<br><b>$3.50 KG</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/tomates.jpg" style="width:50%">
+                                        </div>
+                                        <p>TOMATES<br><b>$3.50 KG</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/PEREJIL.jpg" style="width:68%">
+                                        </div>
+                                        <p>PEREJIL<br><b>$0.1 Uni</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/cebollita.png" style="width:68%">
+                                        </div>
+                                        <p>CEBOLLITA<br><b>$0.1 Uni</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                             
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                
+                
+                <footer class="w3-light-grey w3-center" id="golosinas">
+                    <div class="w3-row-padding">
+                        <div class="w3-col">
+                            <div class="w3-row w3-white"> <!--para poner el color del fondo -->
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/ROCKLETS.jpg" style="width:70%">
+                                        <p>ROCKLETS<br><b>$0.1 Uni.</b></p>
+                                    </div>
+                                    <div class="w3-container">
+                                        <img src="Recursos/img/topline.jpg" style="width:90%">
+                                        <p>TOPLINE<br><b>$0.1 Uni.</b></p>
+                                    </div>
+                                </div>
+
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/bauducco.jpg" style="width:75%">
+                                        </div>
+                                        <p>BAUDUCCO<br><b>$3.0 Uni.</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/oreo.jpg" style="width:65%">
+                                        </div>
+                                        <p>OREO<br><b>$3.0 Uni.</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/mister pop.jpg" style="width:68%">
+                                        </div>
+                                        <p>MISTER POP'S<br><b>$3.50</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/BOM BOM NESTLE.png" style="width:50%">
+                                        </div>
+                                        <p>BOMBOM NESTLE<br><b>$5.50</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/MANA.jpg" style="width:68%">
+                                        </div>
+                                        <p>MANA<br><b>$1.0 Uni</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                                <div class="w3-col l3 s4">
+                                    <div class="w3-container">
+                                        <div class="w3-display-container">
+                                            <img src="Recursos/img/PEPITOS.jpg" style="width:68%">
+                                        </div>
+                                        <p>PEPITOS<br><b>$1.0 Uni</b></p>
+                                    </div>
+                                    <br>
+                                </div>
+                                
+                             
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+                <!--             Subscribe section -->
+                <div class="w3-container w3-black w3-padding-32">
+                    <!--                <h1>Subscribe</h1>-->
+                    <!--                <p>To get special offers and VIP treatment:</p>-->
+                    <!--                <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>-->
+                    <!--                <button type="button" class="w3-button w3-red w3-margin-bottom">Subscribe</button>-->
+                </div>
+
+                <!-- Footer -->
+                <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+                    <div class="w3-row-padding">
+                        <div class="w3-col s4">
+                            <h4>Contactos</h4>
+                            <p>Preguntas? Adelante!!!!.</p>
+                            <form action="/action_page.php" target="_blank">
+                                <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Nombre" required></p>
+                                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+                                <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Tema" required></p>
+                                <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Mensaje" required></p>
+                                <button type="submit" class="w3-button w3-block w3-black">Enviar</button>
+                            </form>
+                        </div>
+
+                        <div class="w3-col s4">
+                            <h4>Acerca de</h4>
+                            <p><a href="#">Sobre nosotros</a></p>
+                            <p><a href="#">Estamos contratando</a></p>
+                            <p><a href="#">Apoyo</a></p>
+                            <p><a href="#">Encontrar Local</a></p>
+                            <p><a href="#">Envío</a></p>
+                            <p><a href="#">Pago</a></p>
+                            <p><a href="#">Tarjeta de regalo</a></p>
+                            <p><a href="#">Regreso</a></p>
+                            <p><a href="#">Ayuda</a></p>
+                        </div>
+
+                        <div class="w3-col s4 w3-justify">
+                            <h4>Almacenar</h4>
+                            <p><i class="fa fa-fw fa-map-marker"></i> Autoservice WALKER</p>
+                            <p><i class="fa fa-fw fa-phone"></i> 0992631271</p>
+                            <p><i class="fa fa-fw fa-envelope"></i> walker@autoservice.com.py</p>
+                            <h4>Aceptamos</h4>
+                            <p><i class="fa fa-fw fa-cc-amex"></i> Tarjeta Debito</p>
+                            <p><i class="fa fa-fw fa-credit-card"></i> Tarjeta Créditos</p>
+                            <p><i class="fa fa-fw fa-credit-card"></i> Cheques</p>
+                            <br>
+                            <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>
+                            <i class="fa fa-instagram w3-hover-opacity w3-large"></i>
+                            <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>
+                            <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>
+                            <i class="fa fa-twitter w3-hover-opacity w3-large"></i>
+                            <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>
+                        </div>
+                    </div>
+                </footer>
+                <script type="text/javascript">
+                    function hora() {
+                        var DateString = (new Date()).toString();
+                        self.status = DateString.substring(0, 3 + DateString.lastIndexOf(':')) +
+                                "Cualquier mensaje";
+                        setTimeout("hora()", 200);
+                    }
+                    hora()
+                </script>
+
+                <div class="w3-black w3-center w3-padding-24">Autoservice WALKER</div>
+
+                <!-- End page content -->
+            </div>
+
+            <!-- Newsletter Modal -->
+            <div id="newsletter" class="w3-modal">
+                <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+                    <div class="w3-container w3-white w3-center">
+                        <i onclick="document.getElementById('newsletter').style.display = 'none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+                        <h2 class="w3-wide">HOJA INFORMATIVA</h2>
+                        <p>Únase a nuestra lista de correo para recibir actualizaciones sobre nuevas llegadas y ofertas especiales.</p>
+                        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
+                        <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('newsletter').style.display = 'none'">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Accordion 
+                function myAccFunc() {
+                    var x = document.getElementById("demoAcc");
+                    if (x.className.indexOf("w3-show") === -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+            <script>
+                // Accordion 
+                function myABebidas() {
+                    var x = document.getElementById("demoAccbebidas");
+                    if (x.className.indexOf("w3-show") === -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+            <script>
+                // Accordion 
+                function myAccFunc() {
+                    var x = document.getElementById("demoAcc");
+                    if (x.className.indexOf("w3-show") === -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+            <script>
+                // Accordion 
+                function myABebidas() {
+                    var x = document.getElementById("demoAccbebidas");
+                    if (x.className.indexOf("w3-show") == -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+            <script>
+                // Accordion 
+                function myAHuevos() {
+                    var x = document.getElementById("demoAcchuevos");
+                    if (x.className.indexOf("w3-show") == -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+            <script>
+                // Accordion 
+                function myCategorias() {
+                    var x = document.getElementById("demoCategorias");
+                    if (x.className.indexOf("w3-show") === -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // Click on the "Jeans" link on page load to open the accordion for demo purposes
+                document.getElementById("myBtn").click();
+
+
+                // Script to open and close sidebar
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                    document.getElementById("myOverlay").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                    document.getElementById("myOverlay").style.display = "none";
+                }
+            </script>
+
+
+            <script>
+                // Automatic Slideshow - change image every 4 seconds
+                var myIndex = 0;
+                carousel();
+
+                function carousel() {
+                    var i;
+                    var x = document.getElementsByClassName("mySlides");
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";
+                    }
+                    myIndex++;
+                    if (myIndex > x.length) {
+                        myIndex = 1
+                    }
+                    x[myIndex - 1].style.display = "block";
+                    setTimeout(carousel, 4000);
+                }
+
+                // Used to toggle the menu on small screens when clicking on the menu button
+                function myFunction() {
+                    var x = document.getElementById("navDemo");
+                    if (x.className.indexOf("w3-show") == -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                var modal = document.getElementById('ticketModal');
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+
+        </script>
+</body>
+</html>

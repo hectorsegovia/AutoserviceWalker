@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Proveedor</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="Recursos\img\ic.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js" ></script>
+        <script src="../Recursos/JS/Proveedorjs.js" ></script>
+    </head>
+    <body  class="w3-border-cyan">
+    <center>
+        <div style=" width: 800px;">
+            <div  style="width:800px; height: 600px;">
+                <div class="w3-container">
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width: 800px;  margin: 0 auto; ">
+                        <div class="w3-panel w3-card w3-blue-grey">
+                            <h2 class="w3-center">REGISTRO DE PROVEEDOR</h2>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Codigo:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="id_proveedor" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                recuperarProveedorUnico();
+                                            }" placeholder="Valor Autogenerado" size="10"   required="true" >
+                                </div>
+                            </div>
+
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Nombre:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="nombre" onkeypress="keypress(event)" placeholder="Nombre" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Celular:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input class="w3-left w3-input w3-round w3-border" type="text" id="celular"  placeholder="Celular" size="40"  required="true" >
+                                </div>
+                            </div>
+
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Ruc:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="ruc" onkeypress="keypress(event)" placeholder="RUC" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Direccion:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input class="w3-left w3-input w3-round w3-border" type="text" id="direccion"  placeholder="Direccion" size="40"  required="true" >
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Cuenta:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <input  class="w3-left w3-input w3-round w3-border" type="text" id="cuenta1" placeholder="Cuenta" size="10"   required="true" >
+                                </div>
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Ciudad:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select class="w3-input w3-border" id="id_ciudad"></select>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Pais:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <select class="w3-input w3-border" id="id_pais"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <center>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="agregarProveedor();">
+                                <i class="fa fa-close fa-lg"></i>
+                                Agregar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick="document.getElementById('id01').style.display = 'block'; modificarProveedor(); filtroproveedorfocuss()" type="button">
+                                <i class="fa fa-close fa-lg"></i>
+                                Modificar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="document.getElementById('id01').style.display = 'block'; eliminarProveeodor(); filtroproveedorfocuss()">
+                                <i class="fa fa-close fa-lg"></i>
+                                Eliminar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarProveedor();">
+                                <i class="fa fa-close fa-lg"></i>
+                                Guardar
+                            </button> 
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limpieez();">
+                                <i class="fa fa-close fa-lg"></i>
+                                Cancelar
+                            </button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <div id="id01" class="w3-modal w3-white">
+        <div class="w3-container">
+            <center>
+                <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                    <div class="w3-panel w3-card w3-blue-grey">
+                        <h2 class="w3-center">LISTADO DE PROVEEDORES</h2>
+                        <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                    </div>
+                    <div class="w3-container w3-white" id="cont_datos" style=" margin:0 30% 3% 5%;">
+                        <div  style="width: 700px; height: 200px;" onclick="document.getElementById('id_mercaderia').focus();"/>
+                        <table style="border: 8px"> 
+                            <thead>
+                                <tr>
+                                    <th class="w3-blue-grey">Id</th>
+                                    <th class="w3-blue-grey">Nombre</th>
+                                    <th class="w3-blue-grey">RUC</th>
+                                    <th class="w3-blue-grey">CELULAR</th>
+                                    <th class="w3-blue-grey">CIUDAD</th>
+                                    <th class="w3-blue-grey">PAIS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crpTbProveedor">
+                            </tbody>
+                        </table>  
+                    </div>
+                </div>
+                <div class="w3-row w3-section">
+                    <div  class="w3-col s9 w3-center">
+                        <input type="text" id="filtrosproveedor" placeholder="Buscar..." size="50" tabindex="2" onkeyup="FiltroProveedor();">
+                        <button onclick="cerrarbuscador();">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+
+</body>
+</html>

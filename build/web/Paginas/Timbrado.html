@@ -1,0 +1,188 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/Timbradojs.js"></script>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js"></script>
+    </head>
+    <!--<body style="background-color: #00bcd4">-->
+    <body>
+        <script>
+            function sololetras(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "  áéíóúqwertyuiopasdfghjklñzxcvbnm";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+
+        <script>
+            function SoloNumPositivos(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "0123456789";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+        
+        <div class="pl-light-grey" id="_geco_sticky_main"><div class="w3-container w3-white" id="cont_registrar" style=" margin:0 3% 3% 3%;">
+
+                <form class="w3-container" name="form_registrar" action="/registrar.geco" method="POST" enctype="multipart/form-data">
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                        <div class="w3-panel w3-card w3-blue-grey">
+                          
+                            <h2 class="w3-center">REGISTRO DE TIMBRADOS</h2>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                            <!--                            <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+
+                            <div class="w3-container"><div class="w3-row w3-section">
+                                    <button class="w3-button w3-large" onclick="document.getElementById('id01').style.display = 'block'; filtroempleadosfocus();">
+                                        Buscar
+                                    </button>
+                                    <br>
+                                    <div class="w3-col" style=" width:30%;">
+                                      
+                                        <p class="w3-small w3-right">
+                                            <label class="w3-label w3-validate">ID:&nbsp;</label>
+                                        </p>
+                           
+                                    </div>
+                                    <div class="w3-rest" onkeypress="return SoloNumPositivos(event)">
+                                            <input class="w3-input" type="text" id="id_timbrado" name="id" placeholder="Ingrese el Codigo..." size="80" onkeypress="
+                                                if (event.keyCode === 13) {
+                                                    recuperarEmpleadosUnico();
+                                                }" tabindex="2" value required >
+                                    </div>
+                                </div>
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Nro Timbrado:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest" onkeypress="return SoloNumPositivos(event)">
+                                    <input class="w3-input" type="text" id="timbrado_nro"  placeholder="Numero..." size="80" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('fechainicio').focus();
+                                            }" tabindex="2" value required><br>
+                                </div>
+
+
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Fecha de Inicio:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest" onkeypress="return sololetras(event)">
+                                    <input class="w3-input" type="date" id="fechainicio" placeholder="Fecha de Inicio..." size="80" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('fechafin').focus();
+                                            }" tabindex="2" value required><br>
+                                </div>
+
+
+
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Fecha Fin:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest" onkeypress="return SoloNumPositivos(event)">
+                                    <!--<select class="w3-input" type="password" id="empleado" name="empleado" placeholder="Empleados..." size="80" tabindex="2" value required/></select>-->
+                                    <input class="w3-input" type="date" id="fechafin"  placeholder="Fecha Fin..." size="80" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('telefono').focus();
+                                            }" tabindex="2" value required><br>
+                                </div>
+                            </div> 
+     <center>
+<!--        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">-->
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="agregarTimbrado();">
+                <i class="fa fa-close fa-lg"></i>
+                Agregar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick="document.getElementById('id01').style.display = 'block'; modificarTimbrado(); filtrotimbradofocuss()" type="button">
+                <i class="fa fa-close fa-lg"></i>
+                Modificar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="document.getElementById('id01').style.display = 'block'; eliminarTimbrado(); filtrotimbradofocuss()">
+                <i class="fa fa-close fa-lg"></i>
+                Eliminar
+            </button>
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarTimbrado();">
+                <i class="fa fa-close fa-lg"></i>
+                Guardar
+            </button> 
+            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limpieee();">
+                <i class="fa fa-close fa-lg"></i>
+                Cancelar
+            </button> 
+     </center>
+        </div>
+                        </div>
+                </form>
+            </div>
+       <br>
+    <br> 
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-container">
+            <center>
+                <div class="w3-panel w3-card-4 w3-padding-0" style=" width:1050px; margin:0 auto;">
+                    <div class="w3-panel w3-card w3-blue-grey">
+                        <h2 class="w3-center">REGISTRO DE TIMBRADOS</h2>
+                        <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                    </div>
+                    <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 5% 5%;">
+                        <div  style="width: 950px; height: 250px;" onclick="document.getElementById('id_empleados').focus();"/>
+                        <table style="border: 1px " > 
+                            <thead>
+                                <tr>
+                                    <th class="w3-blue-grey">Id</th>
+                                    <th class="w3-blue-grey">Numero</th>
+                                    <th class="w3-blue-grey">Fecha Inicio</th>
+                                    <th class="w3-blue-grey">Fecha Fin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crpTbTimbrado">
+                            </tbody>
+                        </table>  
+                    </div>
+                </div>
+                <input type="text" id="filtrostimbrado" placeholder="Buscar..." size="80" tabindex="2" onkeyup="FiltroTimbrado();">
+                <button onclick="cerrarbuscador();">
+                    Cancelar
+                </button>
+        </div>
+            </center>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+
