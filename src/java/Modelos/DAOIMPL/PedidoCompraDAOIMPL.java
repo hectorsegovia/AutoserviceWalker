@@ -40,14 +40,13 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
         try {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
             query = "INSERT INTO pedidos(fecha, id_sucursal, id_usuario, observacion, estado)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?);";
+                    + "VALUES (?, ?, ?, ?, ?);";
             ps = ConexionDB.getRutaConexion().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, dto.getId_pedido());
-            ps.setDate(2, Genericos.Genericos.retornarFecha(dto.getFecha()));
-            ps.setInt(3, dto.getId_sucursal());
-            ps.setInt(4, dto.getId_usuario());
-            ps.setString(5, dto.getObservacion());
-            ps.setString(6, dto.getEstado());
+            ps.setDate(1, Genericos.Genericos.retornarFecha(dto.getFecha()));
+            ps.setInt(2, dto.getId_sucursal());
+            ps.setInt(3, dto.getId_usuario());
+            ps.setString(4, dto.getObservacion());
+            ps.setString(5, dto.getEstado());
             if (ps.executeUpdate() > 0) {
                 rs = ps.getGeneratedKeys();
                 if (rs.next()) {
@@ -212,28 +211,6 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
                 dto.setId_pedido(rs.getInt("id_pedido"));
                 dto.setFecha(Genericos.Genericos.retornarFechaddMMyyyy(rs.getDate("fecha")));
                 dto.setNombre_sucursal(rs.getString("sucursal"));
-                lista.add(dto);
-            }
-            return lista;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public List<depositoDTO> getListDeposito() {
-        try {
-            List<depositoDTO> lista;
-            depositoDTO dto;
-            query = "SELECT id_deposito, descripcion FROM depositos ORDER BY id_deposito;";
-            ps = ConexionDB.getRutaConexion().prepareStatement(query);
-            rs = ps.executeQuery();
-            lista = new ArrayList<>();
-            while (rs.next()) {
-                dto = new depositoDTO();
-                dto.setId_deposito(rs.getInt("id_deposito"));
-                dto.setDescripcion(rs.getString("descripcion"));
                 lista.add(dto);
             }
             return lista;

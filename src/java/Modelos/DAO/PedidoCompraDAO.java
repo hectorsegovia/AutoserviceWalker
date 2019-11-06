@@ -22,7 +22,4 @@ public interface PedidoCompraDAO {
     public List<MercaderiaDTO> getListMercaderia();
     public List<SucursalDTO> getListSucursal();
     public List<PedidoCompraDTO> getListConsultarTodo();
-    public List<depositoDTO> getListDeposito();
-    
-    
 }
