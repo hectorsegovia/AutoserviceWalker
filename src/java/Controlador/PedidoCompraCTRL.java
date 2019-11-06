@@ -93,10 +93,14 @@ public class PedidoCompraCTRL extends HttpServlet {
                     out.close();
                 }
                 break;
-                case 7:
+
+            case 7:
+                dao.aprobarpedido(dto);
+                break;
+            case 8:
                 System.out.println("Llegamos al caso 4");
                 response.setContentType("application/json, charset=UTF-8");
-                String datosssss = gson.toJson(dao.getListDeposito());
+                String datosssss = gson.toJson(dao.getListcodigo());
                 System.out.println(datosssss);
                 if (datosssss != null) {
                     out.println(datosssss);

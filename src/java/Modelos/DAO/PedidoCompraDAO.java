@@ -18,8 +18,11 @@ import java.util.List;
 public interface PedidoCompraDAO {
     public boolean generarpedido( PedidoCompraDTO dto);
     public boolean anularpedido( PedidoCompraDTO dto);
+    public boolean aprobarpedido( PedidoCompraDTO dto);
     public List<PedidoCompraDTO> recuperarPedido(PedidoCompraDTO dto);
     public List<MercaderiaDTO> getListMercaderia();
     public List<SucursalDTO> getListSucursal();
     public List<PedidoCompraDTO> getListConsultarTodo();
+    public List<PedidoCompraDTO> getListcodigo();
+    
 }

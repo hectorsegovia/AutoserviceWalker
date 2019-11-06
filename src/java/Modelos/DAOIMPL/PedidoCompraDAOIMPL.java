@@ -56,7 +56,7 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
                                 + "VALUES (?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, idPedido);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
                         if (ps.executeUpdate() <= 0) {
                             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
@@ -80,7 +80,7 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
     public boolean anularpedido(PedidoCompraDTO dto) {
         try {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
-            query = "Update pedidos set id_estado='3' where id_pedido=?";
+            query = "Update pedidos set estado='ANULADO' where id_pedido=?";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_pedido());
             if (ps.executeUpdate() > 0) {
@@ -105,15 +105,14 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
         MercaderiaDTO itemMercaderia;
         try {
 
-            query = "SELECT pe.fecha, usu.id_usuario, usu.nombre as usuario, pe.id_estado, su.id_sucursal, su.descripcion as sucursal, pe.observacion,\n"
-                    + "ds.id_mercaderia, mer.descripcion, ds.cantidad, ds.id_deposito, depo.descripcion as deposito\n"
-                    + "                    FROM pedidos pe\n"
-                    + "                     INNER JOIN usuarios usu ON pe.id_usuario=usu.id_usuario\n"
-                    + "                     INNER JOIN sucursales su ON pe.id_sucursal=su.id_sucursal\n"
-                    + "                    	INNER JOIN detalle_pedidos ds ON pe.id_pedido=ds.id_pedido\n"
-                    + "                  	INNER JOIN mercaderias mer ON ds.id_mercaderia=mer.id_mercaderia\n"
-                    + "                  	INNER JOIN depositos depo ON ds.id_deposito=depo.id_deposito\n"
-                    + "                  WHERE pe.id_pedido=? and pe.id_estado=1 and pe.caracter='A'";
+            query = "SELECT pe.fecha, usu.id_usuario, usu.nombre as usuario, pe.estado, su.id_sucursal, su.descripcion as sucursal, pe.observacion,\n"
+                    + "                    ds.codigo_barra, mer.descripcion, ds.cantidad\n"
+                    + "                                      FROM pedidos pe\n"
+                    + "                                    INNER JOIN usuarios usu ON pe.id_usuario=usu.id_usuario\n"
+                    + "                                      INNER JOIN sucursales su ON pe.id_sucursal=su.id_sucursal\n"
+                    + "                                    	INNER JOIN detalle_pedidos ds ON pe.id_pedido=ds.id_pedido\n"
+                    + "                                	INNER JOIN mercaderias mer ON ds.codigo_barra=mer.codigo_barra\n"
+                    + "                                 WHERE pe.id_pedido=?";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_pedido());
             rs = ps.executeQuery();
@@ -129,14 +128,12 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
                 item.setId_sucursal(rs.getInt("id_sucursal"));
                 item.setNombre_sucursal(rs.getString("sucursal"));
                 item.setObservacion(rs.getString("observacion"));
+                item.setEstado(rs.getString("estado"));
 
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("codigo_barra"));
                 itemMercaderia.setDescripcion(rs.getString("descripcion"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
-                itemMercaderia.setId_deposito(rs.getInt("id_deposito"));
-                itemMercaderia.setNombre_deposito(rs.getString("deposito"));
-
                 listaMercaderia.add(itemMercaderia);
                 item.setLista_mercaderias(listaMercaderia);
             }
@@ -161,7 +158,7 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("codigo_barra"));
+                dto.setId_mercaderia(rs.getString("codigo_barra"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 dto.setCantidadd(rs.getInt("cantidad"));
                 lista.add(dto);
@@ -201,8 +198,8 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
             List<PedidoCompraDTO> lista;
             PedidoCompraDTO dto;
             query = "select pe.id_pedido, pe.fecha, su.descripcion as sucursal\n"
-                    + "from pedidos pe, sucursales su\n"
-                    + "where su.id_sucursal=pe.id_sucursal AND pe.caracter='A' and pe.id_estado=1 order by pe.id_pedido desc ; ";
+                    + "                from pedidos pe, sucursales su\n"
+                    + "                   where su.id_sucursal=pe.id_sucursal AND estado='APROBADO' order by pe.id_pedido desc;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
@@ -211,6 +208,49 @@ public class PedidoCompraDAOIMPL implements PedidoCompraDAO {
                 dto.setId_pedido(rs.getInt("id_pedido"));
                 dto.setFecha(Genericos.Genericos.retornarFechaddMMyyyy(rs.getDate("fecha")));
                 dto.setNombre_sucursal(rs.getString("sucursal"));
+                lista.add(dto);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public boolean aprobarpedido(PedidoCompraDTO dto) {
+        try {
+            ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
+            query = "Update pedidos set estado='APROBADO' where id_pedido=?";
+            ps = ConexionDB.getRutaConexion().prepareStatement(query);
+            ps.setInt(1, dto.getId_pedido());
+            if (ps.executeUpdate() > 0) {
+                ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
+                return true;
+            } else {
+                ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoCompraDAOIMPL.class.getName()).log(Level.SEVERE, null, ex);
+            ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+            return false;
+        }
+    }
+
+    @Override
+    public List<PedidoCompraDTO> getListcodigo() {
+        try {
+            List<PedidoCompraDTO> lista;
+            PedidoCompraDTO dto;
+            query = "SELECT COALESCE (MAX(id_pedido),0)+1 as codigo\n"
+                    + "FROM pedidos;";
+            ps = ConexionDB.getRutaConexion().prepareStatement(query);
+            rs = ps.executeQuery();
+            lista = new ArrayList<>();
+            while (rs.next()) {
+                dto = new PedidoCompraDTO();
+                dto.setId_pedido(rs.getInt("codigo"));
                 lista.add(dto);
             }
             return lista;

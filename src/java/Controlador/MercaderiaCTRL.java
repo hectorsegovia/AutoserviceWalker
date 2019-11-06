@@ -80,15 +80,7 @@ public class MercaderiaCTRL extends HttpServlet {
                     out.close();
                 }
             break;
-            case 5:
-                response.setContentType("application/json, charset=UTF-8");
-                String dato= jsonAObjeto.toJson(dao.consultarSegunId(dto.getId_mercaderia()));
-                System.out.println(dato);
-                if (dato != null) {
-                    out.println(dato);
-                    out.close();
-                }
-            break;
+         
              case 6:
                 System.out.println("Llegamos al caso 4");
                 response.setContentType("application/json, charset=UTF-8");

@@ -3,7 +3,8 @@ var jsonCabDetP;
 CargarTablaMercaderia();
 CargarTablaSucursal();
 CargarTablaPedido();
-CargarTablaDeposito();
+
+
 
 function verificar() {
     var camposucursal = $('#id_cucursal').val();
@@ -16,7 +17,6 @@ function verificar() {
     } else {
         prepararJsonPedidos(accion);
         alert('Registro Guardado');
-        limpiarpedido();
     }
 }
 
@@ -70,8 +70,17 @@ function recuperarPedidos() {
     InputIdLectura();
 }
 
+function aprobarpedido() {
+    accion = 7;
+    aprobar();
+}
+
+
+
+
+
 function grabarPedido() {
-     switch (accion) {
+    switch (accion) {
         case 1:
             verificar();
             break;
@@ -79,7 +88,7 @@ function grabarPedido() {
             Preguntar();
             break;
         case 3:
-             confirmar();
+            confirmar();
             break;
     }
 }
@@ -91,6 +100,19 @@ function confirmar() {
     if (confirmar) {
         prepararJsonPedidos(accion);
         alert('Registro Anulado');
+        limpiarpedido();
+        CargarTablapedido();
+    } else {
+        limpiarpedido();
+    }
+}
+
+
+function aprobar() {
+    confirmar = confirm("Estas seguro que querés aprobar el registro???");
+    if (confirmar) {
+        prepararJsonPedidos(accion);
+        alert('Registro Aprobado');
         limpiarpedido();
         CargarTablapedido();
     } else {
@@ -139,7 +161,7 @@ function agregarFilaPedidos() {
 }
 
 
-function Limpiarmercaderia(){
+function Limpiarmercaderia() {
     document.getElementById('id_mercaderia').value = "";
     document.getElementById('descrip_mercaderia').value = "";
     document.getElementById('cantidad').value = "";
@@ -147,7 +169,6 @@ function Limpiarmercaderia(){
 
 
 function prepararJsonPedidos(ban) {
-
 //var jsonCabDet;
     var listamercaderia = [];
 
@@ -166,12 +187,13 @@ function prepararJsonPedidos(ban) {
         "bandera": ban,
         "id_pedido": $('#id_pedido').val().length <= 0 ? "0" : $('#id_pedido').val(),
         "fecha": $('#fecha').val().length <= 0 ? "0" : $('#fecha').val(),
-        "id_estado": $('#id_estado').val().length <= 0 ? "0" : $('#id_estado').val(),
+        "estado": $('#id_estado').val().length <= 0 ? "0" : $('#id_estado').val(),
         "id_usuario": $('#id_usuario').val().length <= 0 ? "0" : $('#id_usuario').val(),
         "id_sucursal": $('#id_usuario').val().length <= 0 ? "0" : $('#id_sucursal').val(),
         "observacion": $('#observacion').val().length <= 0 ? "0" : $('#observacion').val(),
         "lista_mercaderias": listamercaderia.length <= 0 ? "0" : listamercaderia
     };
+    alert('Registro Guardado');
     envioo();
 }
 function envioo() {
@@ -179,6 +201,7 @@ function envioo() {
     xmlhttp.open("POST", "/AutoserviceWalker/PedidoCompraCTRL");
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xmlhttp.send(JSON.stringify(PedidoJSON));
+    CargarTablapedido();
 }
 
 
@@ -213,7 +236,7 @@ function RecuperarPedido() {
                     document.getElementById('id_sucursal').value = json[x].id_sucursal;
                     document.getElementById('descrip_sucursal').value = json[x].nombre_sucursal;
                     document.getElementById('observacion').value = json[x].observacion;
-                    document.getElementById('id_estado').value = json[x].id_estado;
+                    document.getElementById('id_estado').value = json[x].estado;
 
 
                     for (d in json[x].lista_mercaderias) {
@@ -221,8 +244,6 @@ function RecuperarPedido() {
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].id_mercaderia + "</td>\n\
                                 <td style=' width: 60%;'>" + json[x].lista_mercaderias[d].descripcion + "</td>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
-                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].id_deposito + "</td>\n\
-                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].nombre_deposito + "</td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 444 + "," + tindex + ")\" src='../Recursos/img/update.png'/></td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 555 + "," + tindex + ")\" src='../Recursos/img/delete.png'/></td>\n\
                           </tr>");
@@ -239,7 +260,7 @@ function RecuperarPedido() {
 
 
 function getTD(obj) {
-    var varTR = obj.getElementsByTagName('td');  
+    var varTR = obj.getElementsByTagName('td');
     document.getElementById('id_mercaderia').value = varTR[0].innerHTML;
     document.getElementById('descrip_mercaderia').value = varTR[1].innerHTML;
     document.getElementById('buscardormercaderia').style.display = "none";
@@ -247,14 +268,14 @@ function getTD(obj) {
 
 }
 function getTDsucursal(obj) {
-    var varTR = obj.getElementsByTagName('td');  
+    var varTR = obj.getElementsByTagName('td');
     document.getElementById('id_sucursal').value = varTR[0].innerHTML;
     document.getElementById('descrip_sucursal').value = varTR[1].innerHTML;
     document.getElementById('id011').style.display = "none";
     document.getElementById('observacion').focus();
-    }
+}
 function getTDpedido(obj) {
-    var varTR = obj.getElementsByTagName('td');  
+    var varTR = obj.getElementsByTagName('td');
     document.getElementById('id_pedido').value = varTR[0].innerHTML;
     document.getElementById('id_pedido').value = varTR[0].innerHTML;
     RecuperarPedido();
@@ -335,6 +356,44 @@ function CargarTablaSucursal() {
     // 3. Specify your action, location and Send to the server - End
 }
 
+
+function CargarTablaSucursal() {
+    // 1. Instantiate XHR - Start 
+    var xhr;
+    if (window.XMLHttpRequest)//verifica que el navegador tenga soporte
+        xhr = new XMLHttpRequest();
+    else if (window.ActiveXObject)
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+    else
+        throw new Error("Ajax is not supported by your browser");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 && xhr.status < 300)
+            {
+                var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
+                var i;
+                var filas = "";
+                var idTD = "td_";
+                for (i = 0; i < json.length; i++) {
+                    idTD += i;
+                    filas += "<tr onclick=getTDsucursal(this);>";
+                    filas += "<td id=td1_" + i + ">" + json[i].id_sucursal + "</td>";
+                    filas += "<td id=td2_" + i + " >" + json[i].descripcion + "</td>";
+                    filas += "</tr>";
+                }
+                document.getElementById("crpTbSucursal").innerHTML = filas;
+            }
+        }
+    };
+    // 2. Handle Response from Server - End
+
+    // 3. Specify your action, location and Send to the server - Start   
+    xhr.open('POST', '/AutoserviceWalker/PedidoCompraCTRL');
+    xhr.send(JSON.stringify(datos = {bandera: 8}));
+    // 3. Specify your action, location and Send to the server - End
+}
+
+
 function CargarTablaPedido() {
     // 1. Instantiate XHR - Start 
     var xhr;
@@ -371,6 +430,14 @@ function CargarTablaPedido() {
     xhr.send(JSON.stringify(datos = {bandera: 6}));
     // 3. Specify your action, location and Send to the server - End
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -456,11 +523,11 @@ function FiltroDeposito() {
 }
 
 function getTDdeposito(obj) {
-    var varTR = obj.getElementsByTagName('td');  
+    var varTR = obj.getElementsByTagName('td');
     document.getElementById('id_deposito').value = varTR[0].innerHTML;
     document.getElementById('descripcion').value = varTR[1].innerHTML;
     document.getElementById('busacadordeposito').style.display = "none";
-    }
+}
 
 
 

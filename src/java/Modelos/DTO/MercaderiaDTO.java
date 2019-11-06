@@ -11,7 +11,7 @@ package Modelos.DTO;
  */
 public class MercaderiaDTO {
     private Integer bandera;
-    private Integer id_mercaderia;
+    private String id_mercaderia;
     private String codigo_barra;
     private String descripcion;
     private Integer precio;
@@ -144,11 +144,11 @@ public class MercaderiaDTO {
         this.bandera = bandera;
     }
 
-    public Integer getId_mercaderia() {
+    public String getId_mercaderia() {
         return id_mercaderia;
     }
 
-    public void setId_mercaderia(Integer id_mercaderia) {
+    public void setId_mercaderia(String id_mercaderia) {
         this.id_mercaderia = id_mercaderia;
     }
 
