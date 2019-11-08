@@ -56,7 +56,7 @@ public class NComprasDAOIMPL implements NCreditoDAO {
                                 + "VALUES (?, ?, ?, ?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, idCredito);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
                         ps.setInt(4, item.getMonto());
                         ps.setInt(5, item.getSaldo());
@@ -128,7 +128,7 @@ public class NComprasDAOIMPL implements NCreditoDAO {
                 item.setId_estado(rs.getInt("id_estado"));
 
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("id_mercaderia"));
                 itemMercaderia.setDescripcion(rs.getString("descripcion"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
                 itemMercaderia.setMonto(rs.getInt("monto"));

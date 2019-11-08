@@ -3,6 +3,7 @@ var jsonCabDetP;
 CargarTablaMercaderia();
 CargarTablaSucursal();
 CargarTablaPedido();
+CargarTablaCodigo();
 
 
 
@@ -357,7 +358,7 @@ function CargarTablaSucursal() {
 }
 
 
-function CargarTablaSucursal() {
+function CargarTablaCodigo() {
     // 1. Instantiate XHR - Start 
     var xhr;
     if (window.XMLHttpRequest)//verifica que el navegador tenga soporte
@@ -374,14 +375,10 @@ function CargarTablaSucursal() {
                 var i;
                 var filas = "";
                 var idTD = "td_";
+                var idTD = "td_";
                 for (i = 0; i < json.length; i++) {
-                    idTD += i;
-                    filas += "<tr onclick=getTDsucursal(this);>";
-                    filas += "<td id=td1_" + i + ">" + json[i].id_sucursal + "</td>";
-                    filas += "<td id=td2_" + i + " >" + json[i].descripcion + "</td>";
-                    filas += "</tr>";
-                }
-                document.getElementById("crpTbSucursal").innerHTML = filas;
+                document.getElementById("id_pedido").value = json[i].id_pedido;
+            }
             }
         }
     };

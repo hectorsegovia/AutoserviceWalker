@@ -63,7 +63,7 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                                 + "    VALUES (?, ?, ?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, reg_compras);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
                         ps.setInt(4, item.getTotal());
                         ps.setInt(5, item.getPrecio());
@@ -75,9 +75,9 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                                 + "   SET cantidad=(select cantidad from stock where id_mercaderia=?) + ?\n"
                                 + " WHERE id_mercaderia=? and id_deposito=?;";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
-                        ps.setInt(1, item.getId_mercaderia());
+                        ps.setString(1, item.getId_mercaderia());
                         ps.setInt(2, item.getCantidad());
-                        ps.setInt(3, item.getId_mercaderia());
+                        ps.setString(3, item.getId_mercaderia());
                         ps.setInt(4, 1);
                         if (ps.executeUpdate() <= 0) {
                             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
@@ -173,7 +173,7 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                 item.setId_estado(rs.getInt("id_estado"));
 
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("id_mercaderia"));
                 itemMercaderia.setDescripcion(rs.getString("Mercaderia"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
                 itemMercaderia.setTotal(rs.getInt("monto_total"));
@@ -243,7 +243,7 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                 item.setId_orden(rs.getInt("id_ordencompra"));
                 System.out.println("Llegueeeee");
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("id_mercaderia"));
                 itemMercaderia.setDescripcion(rs.getString("mercaderia"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
                 itemMercaderia.setPrecio(rs.getInt("precio"));

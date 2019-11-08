@@ -62,7 +62,7 @@ public class Factura_ventaDAOIMPL implements Factura_ventaDAO {
                                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, idfactura);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
                         ps.setInt(4, 0);
                         ps.setInt(5, 0);
@@ -77,9 +77,9 @@ public class Factura_ventaDAOIMPL implements Factura_ventaDAO {
                         query = "UPDATE stock SET id_deposito=?, cantidad=(select cantidad from stock where id_mercaderia=?) - ? WHERE id_mercaderia=?;";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, 1);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
-                        ps.setInt(4, item.getId_mercaderia());
+                        ps.setString(4, item.getId_mercaderia());
                         if (ps.executeUpdate() <= 0) {
                             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
                             return false;
@@ -163,7 +163,7 @@ public class Factura_ventaDAOIMPL implements Factura_ventaDAO {
                 item.setNombre_cliente(rs.getString("nombre"));
                 item.setId_timbrado(rs.getInt("id_timbrado"));
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("id_mercaderia"));
                 itemMercaderia.setDescripcion(rs.getString("mercaderia"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
                 itemMercaderia.setVen_iva(rs.getInt("ven_iva"));
@@ -263,7 +263,7 @@ public class Factura_ventaDAOIMPL implements Factura_ventaDAO {
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("id_mercaderia"));
+                dto.setId_mercaderia(rs.getString("id_mercaderia"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 dto.setPrecio(rs.getInt("precio"));
                 lista.add(dto);

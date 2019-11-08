@@ -33,7 +33,45 @@ public class MercaderiaDTO {
     private Integer ven_iva;
     private Integer descuentos;
     private Integer cantidadd;
+    private String nombre_impuesto;
+    private Integer iva10;
+    private Integer iva5;
+    private Integer exenta;
 
+    public Integer getIva10() {
+        return iva10;
+    }
+
+    public void setIva10(Integer iva10) {
+        this.iva10 = iva10;
+    }
+
+    public Integer getIva5() {
+        return iva5;
+    }
+
+    public void setIva5(Integer iva5) {
+        this.iva5 = iva5;
+    }
+
+    public Integer getExenta() {
+        return exenta;
+    }
+
+    public void setExenta(Integer exenta) {
+        this.exenta = exenta;
+    }
+
+    public String getNombre_impuesto() {
+        return nombre_impuesto;
+    }
+
+    public void setNombre_impuesto(String nombre_impuesto) {
+        this.nombre_impuesto = nombre_impuesto;
+    }
+
+    
+    
     public Integer getCantidadd() {
         return cantidadd;
     }

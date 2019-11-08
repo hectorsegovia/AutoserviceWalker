@@ -499,8 +499,11 @@ function RecuperarPedidos() {
                         $('#tabladetalleorden').append("<tr id=\'prod" + tindex + "\'>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].id_mercaderia + "</td>\n\
                                 <td style=' width: 60%;'>" + json[x].lista_mercaderias[d].descripcion + "</td>\n\
-                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
-                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].precio + "</td>\n\
+                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].precio + "</td>\n\
+                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
+                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].exenta + "</td>\n\
+                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva5 + "</td>\n\
+                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva10 + "</td>\n\
                                 \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].total + "</td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 444 + "," + tindex + ")\" src='../Recursos/img/update.png'/></td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 555 + "," + tindex + ")\" src='../Recursos/img/delete.png'/></td>\n\

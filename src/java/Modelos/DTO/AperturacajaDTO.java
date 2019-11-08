@@ -24,7 +24,27 @@ public class AperturacajaDTO {
     private Integer montotarjeta;
     private Integer montototal;
     private Integer id_responsable;
+    private String fecha_cierre;
+    private String estado;
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+
+    public String getFecha_cierre() {
+        return fecha_cierre;
+    }
+
+    public void setFecha_cierre(String fecha_cierre) {
+        this.fecha_cierre = fecha_cierre;
+    }
+
+    
     public Integer getId_responsable() {
         return id_responsable;
     }

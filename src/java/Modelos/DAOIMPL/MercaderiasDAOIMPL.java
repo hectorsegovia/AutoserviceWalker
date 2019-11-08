@@ -273,7 +273,7 @@ public class MercaderiasDAOIMPL implements MercaderiaDAO {
             ps.setInt(11, dto.getId_subcategoria());
             ps.setInt(12, dto.getId_tifamilia());
             ps.setString(13, "A");
-            ps.setInt(14, dto.getId_mercaderia());
+            ps.setString(14, dto.getId_mercaderia());
             if (ps.executeUpdate() > 0) {
                 ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
                 return true;
@@ -296,7 +296,7 @@ public class MercaderiasDAOIMPL implements MercaderiaDAO {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
             query = "UPDATE mercaderias SET caracter='I' where id_mercaderia=?;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
-            ps.setInt(1, dto.getId_mercaderia());
+            ps.setString(1, dto.getId_mercaderia());
             if (ps.executeUpdate() > 0) {
                 ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
                 return true;
@@ -327,7 +327,7 @@ public class MercaderiasDAOIMPL implements MercaderiaDAO {
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("id_mercaderia"));
+                dto.setId_mercaderia(rs.getString("id_mercaderia"));
                 dto.setCodigo_barra(rs.getString("codigo_barra"));
                 dto.setDescripcion(rs.getString("mercaderia"));
                 dto.setPrecio(rs.getInt("precio"));
@@ -355,7 +355,7 @@ public class MercaderiasDAOIMPL implements MercaderiaDAO {
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("id_mercaderia"));
+                dto.setId_mercaderia(rs.getString("id_mercaderia"));
                 dto.setCodigo_barra(rs.getString("codigo_barra"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 dto.setPrecio(rs.getInt("precio"));

@@ -56,7 +56,7 @@ public class ajustesDAOIMPL implements ajustesDAO {
                                 + "    VALUES (?, ?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, reg_ajustes);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getId_motivo());
                         ps.setInt(4, item.getCantidad());
                         if (ps.executeUpdate() <= 0) {
@@ -67,9 +67,9 @@ public class ajustesDAOIMPL implements ajustesDAO {
                                 + "   SET cantidad=(select cantidad from stock where id_mercaderia=?) - ?\n"
                                 + " WHERE id_mercaderia=? and id_deposito=?;";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
-                        ps.setInt(1, item.getId_mercaderia());
+                        ps.setString(1, item.getId_mercaderia());
                         ps.setInt(2, item.getCantidad());
-                        ps.setInt(3, item.getId_mercaderia());
+                        ps.setString(3, item.getId_mercaderia());
                         ps.setInt(4, 1);
                         if (ps.executeUpdate() <= 0) {
                             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
@@ -152,7 +152,7 @@ public class ajustesDAOIMPL implements ajustesDAO {
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new MercaderiaDTO();
-                dto.setId_mercaderia(rs.getInt("id_mercaderia"));
+                dto.setId_mercaderia(rs.getString("id_mercaderia"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 lista.add(dto);
             }

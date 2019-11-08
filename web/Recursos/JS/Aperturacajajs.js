@@ -88,16 +88,19 @@ function filtroaperturafocuss() {
 
 
 function construirJSON(ban) {
+    alert('llegueee');
     // alert(ban);
     datos = {
         bandera: ban,
         id_apertura: (document.getElementById('id_apertura').value === "") ? "0" : document.getElementById('id_apertura').value,
-        id_caja: document.getElementById('id_caja').value,
-        id_sucursal: document.getElementById('id_sucursal').value,
-        id_usuario: document.getElementById('id_usuario').value,
         fecha: fecha,
+        id_usuario: document.getElementById('id_usuario').value,
+        montototal: document.getElementById('efectivo').value,
+        id_caja: document.getElementById('id_caja').value,
+        fecha_cierre: document.getElementById('fecha_cierre').value,
         id_responsable: document.getElementById('id_responsable').value,
-        montototal: document.getElementById('efectivo').value
+        estado: document.getElementById('id_estado').value
+
     };
     envio();
     CargarTablaApertura();
@@ -168,6 +171,7 @@ function envio() {
 }
 
 function recuperarAperturaUnico() {
+    alert("Llegueeeeee");
     var xhr;
     if (window.XMLHttpRequest)//verifica que el navegador tenga soporte
         xhr = new XMLHttpRequest();
@@ -190,13 +194,12 @@ function recuperarAperturaUnico() {
                 for (i = 0; i < json.length; i++) {
                     document.getElementById('id_apertura').value = json[i].id_apertura;
                     document.getElementById('id_caja').value = json[i].id_caja;
-                    document.getElementById('id_sucursal').value = json[i].id_sucursal;
                     document.getElementById('id_usuario').value = json[i].id_usuario;
-//                    document.getElementById('nombre_perfil').value = json[i].nombre_perfil;
                     document.getElementById('fecha').value = json[i].fecha;
                     document.getElementById('efectivo').value = json[i].montoefectivo;
-                    document.getElementById('montototal').value = json[i].montototal;
-                    document.getElementById('efectivo').focus();
+                    document.getElementById('id_responsable').value = json[i].id_responsable;
+                    document.getElementById('fecha_cierre').value = json[i].fecha_cierre;
+                    document.getElementById('id_estado').value = json[i].estado;
                 }
             }
         }

@@ -58,7 +58,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
                                 + "VALUES (?, ?, ?, ?, ?);";
                         ps = ConexionDB.getRutaConexion().prepareStatement(query);
                         ps.setInt(1, idOrden);
-                        ps.setInt(2, item.getId_mercaderia());
+                        ps.setString(2, item.getId_mercaderia());
                         ps.setInt(3, item.getCantidad());
                         ps.setInt(4, item.getPrecio());
                         ps.setInt(5, item.getTotal());
@@ -74,7 +74,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
                             return false;
                         }
                         ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
-                        return true; 
+                        return true;
                     }
                 }
 
@@ -138,7 +138,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
                 item.setId_proveedor(rs.getInt("id_proveedor"));
                 item.setNombre_proveedor(rs.getString("nombre"));
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
+                itemMercaderia.setId_mercaderia(rs.getString("codigo_barra"));
                 itemMercaderia.setDescripcion(rs.getString("mercaderia"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
                 itemMercaderia.setPrecio(rs.getInt("precio"));
@@ -205,7 +205,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
         try {
             List<PedidoCompraDTO> lista;
             PedidoCompraDTO dto;
-            query = "SELECT p.id_pedido, p.fecha, se.descripcion FROM sucursales se, pedidos p where se.id_sucursal=p.id_sucursal and p.id_estado='1' and p.caracter='A'";
+            query = "SELECT p.id_pedido, p.fecha, se.descripcion FROM sucursales se, pedidos p where se.id_sucursal=p.id_sucursal and estado='APROBADO'";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
@@ -232,14 +232,25 @@ public class OrdenDAOIMPLE implements OrdenDAO {
         MercaderiaDTO itemMercaderia;
         try {
 
-            query = "SELECT pe.id_pedido,\n"
-                    + "ds.id_mercaderia, mer.descripcion, ds.cantidad, mer.precio\n"
-                    + "                    FROM pedidos pe\n"
-                    + "                     INNER JOIN usuarios usu ON pe.id_usuario=usu.id_usuario\n"
-                    + "                     INNER JOIN sucursales su ON pe.id_sucursal=su.id_sucursal\n"
-                    + "                    	INNER JOIN detalle_pedidos ds ON pe.id_pedido=ds.id_pedido\n"
-                    + "                  	INNER JOIN mercaderias mer ON ds.id_mercaderia=mer.id_mercaderia\n"
-                    + "                  WHERE pe.id_pedido=? and pe.id_estado=1 and pe.caracter='A'";
+            query = "select pe.id_pedido,ds.codigo_barra, mer.descripcion as mercaderias, mer.precio_compra, ds.cantidad, im.descripcion AS impuesto,\n"
+                    + "	(case when im.descripcion = 10 then \n"
+                    + "	(mer.precio_compra * ds.cantidad)\n"
+                    + "	else\n"
+                    + "	'0' end) as \"IVA 10%\", \n"
+                    + "	(case when im.descripcion = 5 then \n"
+                    + "	(mer.precio_compra * ds.cantidad)\n"
+                    + "	else\n"
+                    + "	'0' end) as \"IVA 5%\",\n"
+                    + "	(case when im.descripcion = 0 then \n"
+                    + "	(mer.precio_compra * ds.cantidad)\n"
+                    + "	else\n"
+                    + "	'0' end) as \"EXENTA\"\n"
+                    + "	FROM pedidos pe INNER JOIN usuarios usu ON pe.id_usuario=usu.id_usuario\n"
+                    + "	INNER JOIN sucursales su ON pe.id_sucursal=su.id_sucursal\n"
+                    + "	INNER JOIN detalle_pedidos ds ON pe.id_pedido=ds.id_pedido\n"
+                    + "	INNER JOIN mercaderias mer ON ds.codigo_barra=mer.codigo_barra\n"
+                    + "	INNER JOIN impuestos im ON im.id_impuesto=mer.id_impuesto\n"
+                    + "	WHERE pe.id_pedido=? and pe.estado='APROBADO'";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_pedido());
             rs = ps.executeQuery();
@@ -251,11 +262,14 @@ public class OrdenDAOIMPLE implements OrdenDAO {
 //              item.setFecha(Genericos.retornarFechaddMMyyyy(rs.getDate("fecha")));
                 item.setId_pedido(rs.getInt("id_pedido"));
                 itemMercaderia = new MercaderiaDTO();
-                itemMercaderia.setId_mercaderia(rs.getInt("id_mercaderia"));
-                itemMercaderia.setDescripcion(rs.getString("descripcion"));
+                itemMercaderia.setId_mercaderia(rs.getString("codigo_barra"));
+                itemMercaderia.setDescripcion(rs.getString("mercaderias"));
+                itemMercaderia.setPrecio(rs.getInt("precio_compra"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
-                itemMercaderia.setPrecio(rs.getInt("precio"));
-                itemMercaderia.setTotal(rs.getInt("precio") * rs.getInt("cantidad"));
+                itemMercaderia.setIva10(rs.getInt("IVA 10%"));
+                itemMercaderia.setIva5(rs.getInt("IVA 5%"));
+                itemMercaderia.setExenta(rs.getInt("EXENTA"));
+                itemMercaderia.setTotal(rs.getInt("precio_compra") * rs.getInt("cantidad"));
                 listaMercaderia.add(itemMercaderia);
                 item.setLista_mercaderias(listaMercaderia);
             }
@@ -273,8 +287,8 @@ public class OrdenDAOIMPLE implements OrdenDAO {
         try {
             List<OrdenDTO> lista;
             OrdenDTO dto;
-            query = "SELECT o.id_ordencompra, o.fecha, p.id_pedido, pro.nombre FROM proveedores pro, pedidos p, orden_compras o\n" +
-"                                  where p.id_pedido=o.id_pedido and pro.id_proveedor=o.id_proveedor";
+            query = "SELECT o.id_ordencompra, o.fecha, p.id_pedido, pro.nombre FROM proveedores pro, pedidos p, orden_compras o\n"
+                    + "                                  where p.id_pedido=o.id_pedido and pro.id_proveedor=o.id_proveedor";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();

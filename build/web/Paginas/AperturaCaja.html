@@ -121,11 +121,11 @@
                             <div class="w3-row w3-section">
                                 <div class="w3-col" style=" width: 13%; ">
                                     <p class="w3-small w3-right">
-                                        <label class="w3-label w3-validate">Sucursal:&nbsp;</label>
+                                        <label class="w3-label w3-validate">Fecha Cierre:&nbsp;</label>
                                     </p>
                                 </div>
                                 <div  class="w3-col s4 w3-center">
-                                    <select class="w3-input w3-border" id="id_sucursal"></select>
+                                    <input class="w3-left w3-input w3-round w3-border" type="text" id="fecha_cierre"  placeholder="Fecha Cierre" size="40"  required="true" >
                                 </div>
                                 <div class="w3-col" style=" width: 13%; ">
                                     <p class="w3-small w3-right">
@@ -134,6 +134,20 @@
                                 </div>
                                 <div  class="w3-col s4 w3-center">
                                     <select class="w3-input w3-border" id="id_responsable"></select>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style=" width: 13%; ">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Estado:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div  class="w3-col s4 w3-center">
+                                    <SELECT class="w3-left w3-input w3-round w3-border" id="id_estado" SIZE=1> 
+                                        <OPTION VALUE="PENDIENTE">Pendiente</OPTION>
+                                        <OPTION VALUE="FINALIZADO">Finalizado</OPTION>
+                                        <OPTION VALUE="ANULADO">Anulado</OPTION>
+                                    </SELECT>
                                 </div>
                             </div>
                         </div>

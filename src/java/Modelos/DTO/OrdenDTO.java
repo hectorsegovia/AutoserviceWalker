@@ -22,10 +22,11 @@ public class OrdenDTO {
     private Integer id_pedido;
     private Integer id_proveedor;
     private String nombre_proveedor;
- 
+
     
     private List<MercaderiaDTO> lista_mercaderias;
-
+    
+    
     public String getNombre_estado() {
         return nombre_estado;
     }

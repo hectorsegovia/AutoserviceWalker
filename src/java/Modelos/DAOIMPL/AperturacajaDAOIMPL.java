@@ -39,7 +39,7 @@ public class AperturacajaDAOIMPL implements AperturacajaDAO {
         try {
             List<CajasDTO> lista;
             CajasDTO dto;
-            query = "SELECT id_caja, descripcion FROM cajas where caracter='A' ORDER BY id_caja;";
+            query = "SELECT id_caja, descripcion FROM cajas where estado='ACTIVO' ORDER BY id_caja;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
@@ -82,19 +82,18 @@ public class AperturacajaDAOIMPL implements AperturacajaDAO {
     public boolean agregar(AperturacajaDTO dto) {
         try {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
-            query = "INSERT INTO public.apertura_cajas(id_caja, id_sucursal, id_usuario, monto_aper_efectivo, total_apertura, caracter, fecha_apertura, id_responsable)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            query = "INSERT INTO apertura_cierre(id_caja, id_usuario, fecha_apertura, total_apertura, fecha_cierre, estado, responsable)\n"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_caja());
-            ps.setInt(2, dto.getId_sucursal());
-            ps.setInt(3, dto.getId_usuario());
+            ps.setInt(2, dto.getId_usuario());
+            ps.setDate(3, Genericos.Genericos.retornarFecha(dto.getFecha()));
             ps.setInt(4, dto.getMontototal());
-            ps.setInt(5, dto.getMontototal());
-            ps.setString(6, "A");
-            ps.setDate(7, Genericos.Genericos.retornarFecha(dto.getFecha()));
-            ps.setInt(8, dto.getId_responsable());
+            ps.setDate(5, Genericos.Genericos.retornarFecha(dto.getFecha_cierre()));
+            ps.setString(6, dto.getEstado());
+            ps.setInt(7, dto.getId_responsable());
             if (ps.executeUpdate() > 0) {
-                query = "update cajas set caracter='I' where id_caja=?";
+                query = "update cajas set estado='INACTIVO' where id_caja=?";
                 ps = ConexionDB.getRutaConexion().prepareStatement(query);
                 ps.setInt(1, dto.getId_caja());
                 if (ps.executeUpdate() <= 0) {
@@ -177,16 +176,16 @@ public class AperturacajaDAOIMPL implements AperturacajaDAO {
         try {
             List<AperturacajaDTO> lista;
             AperturacajaDTO dto;
-            query = "SELECT a.id_apertura, ca.descripcion, u.nombre, a.fecha_apertura\n"
-                    + "FROM public.apertura_cajas a, cajas ca, usuarios u\n"
-                    + "where ca.id_caja=a.id_caja and u.id_usuario=a.id_usuario\n"
-                    + "order by a.id_apertura;";
+            query = "SELECT a.id_aperturacierre, ca.descripcion, u.nombre, a.fecha_apertura\n"
+                    + "                    FROM public.apertura_cierre a, cajas ca, usuarios u\n"
+                    + "                    where ca.id_caja=a.id_caja and u.id_usuario=a.id_usuario\n"
+                    + "                    order by a.id_aperturacierre;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new AperturacajaDTO();
-                dto.setId_apertura(rs.getInt("id_apertura"));
+                dto.setId_apertura(rs.getInt("id_aperturacierre"));
                 dto.setNombre_caja(rs.getString("descripcion"));
                 dto.setNombre_usuario(rs.getString("nombre"));
                 dto.setFecha(Genericos.Genericos.retornarFechaddMMyyyy(rs.getDate("fecha_apertura")));
@@ -201,24 +200,30 @@ public class AperturacajaDAOIMPL implements AperturacajaDAO {
 
     @Override
     public List<AperturacajaDTO> consultarSegunId(Integer id) {
+        System.out.print("lelelñleelleelle");
+        System.out.print("lelelñleelleelle");
+        System.out.print("lelelñleelleelle");
+        System.out.print("lelelñleelleelle");
+        System.out.print("lelelñleelleelle");
         try {
             List<AperturacajaDTO> lista;
             AperturacajaDTO dto;
-            query = "SELECT id_apertura, id_caja, id_sucursal, id_usuario, fecha_apertura, \n"
-                    + "       monto_aper_efectivo\n"
-                    + "  FROM public.apertura_cajas where id_apertura=?;";
+            query = "SELECT id_aperturacierre, fecha_apertura,  id_usuario,  total_apertura, id_caja, fecha_cierre, responsable, estado\n"
+                    + "                      FROM public.apertura_cierre where id_aperturacierre=?;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new AperturacajaDTO();
-                dto.setId_apertura(rs.getInt("id_apertura"));
-                dto.setId_caja(rs.getInt("id_caja"));
-                dto.setId_sucursal(rs.getInt("id_sucursal"));
-                dto.setId_usuario(rs.getInt("id_usuario"));
+                dto.setId_apertura(rs.getInt("id_aperturacierre"));
                 dto.setFecha(Genericos.Genericos.retornarFechaddMMyyyy(rs.getDate("fecha_apertura")));
-                dto.setMontoefectivo(rs.getInt("monto_aper_efectivo"));
+                dto.setId_usuario(rs.getInt("id_usuario"));
+                dto.setMontoefectivo(rs.getInt("total_apertura"));
+                dto.setId_caja(rs.getInt("id_caja"));
+                dto.setFecha_cierre(Genericos.Genericos.retornarFechaddMMyyyy(rs.getDate("fecha_cierre")));
+                dto.setId_responsable(rs.getInt("responsable"));
+                dto.setEstado(rs.getString("estado"));
                 lista.add(dto);
             }
             return lista;
