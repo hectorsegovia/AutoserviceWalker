@@ -16,15 +16,55 @@ public class OrdenDTO {
     private Integer id_orden;
     private String fecha;
     private Integer id_usuario;
-    private Integer id_estado;
     private String nombre_estado;
     private Integer id_sucursal;
+    private String nombre_sucursal;
     private Integer id_pedido;
     private Integer id_proveedor;
     private String nombre_proveedor;
+    private String observacion;
+    private Integer id_condicion;
+    private String estado;
 
     
     private List<MercaderiaDTO> lista_mercaderias;
+
+    public String getNombre_sucursal() {
+        return nombre_sucursal;
+    }
+
+    public void setNombre_sucursal(String nombre_sucursal) {
+        this.nombre_sucursal = nombre_sucursal;
+    }
+
+    public Integer getId_condicion() {
+        return id_condicion;
+    }
+
+    public void setId_condicion(Integer id_condicion) {
+        this.id_condicion = id_condicion;
+    }
+
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
+    
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+    
+    
     
     
     public String getNombre_estado() {
@@ -83,14 +123,6 @@ public class OrdenDTO {
 
     public void setId_usuario(Integer id_usuario) {
         this.id_usuario = id_usuario;
-    }
-
-    public Integer getId_estado() {
-        return id_estado;
-    }
-
-    public void setId_estado(Integer id_estado) {
-        this.id_estado = id_estado;
     }
 
     public Integer getId_sucursal() {

@@ -76,7 +76,7 @@ public class OrdenCTRL extends HttpServlet {
             case 5:
                 System.out.println("Llegamos al caso 4");
                 response.setContentType("application/json, charset=UTF-8");
-                String datosss = gson.toJson(dao.getListEstado());
+                String datosss = gson.toJson(dao.getListCondicion());
                 System.out.println(datosss);
                 if (datosss != null) {
                     out.println(datosss);
@@ -93,7 +93,7 @@ public class OrdenCTRL extends HttpServlet {
                     out.close();
                 }
                 break;
-                case 7:
+            case 7:
                 System.out.println("Llegamos al caso 4");
                 response.setContentType("application/json, charset=UTF-8");
                 String datosssss = gson.toJson(dao.getListPedido());
@@ -103,7 +103,7 @@ public class OrdenCTRL extends HttpServlet {
                     out.close();
                 }
                 break;
-                case 8:
+            case 8:
                 response.setContentType("application/json, charset=UTF-8");
                 String jsonCabDeta;
                 jsonCabDeta = gson.toJson(dao.recuperarPedido(dto));
@@ -111,10 +111,23 @@ public class OrdenCTRL extends HttpServlet {
                 out.print(jsonCabDeta);
                 out.close();
                 break;
-
+            case 9:
+                System.out.println("Llegamos al caso 4");
+                response.setContentType("application/json, charset=UTF-8");
+                String datossssss = gson.toJson(dao.getListcodigoS());
+                System.out.println(datossssss);
+                if (datossssss != null) {
+                    out.println(datossssss);
+                    out.close();
+                }
+                break;
+            case 10:
+                dao.aprobarorden(dto);
+                break;
         }
 
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -5,7 +5,7 @@
  */
 package Modelos.DAO;
 
-import Modelos.DTO.EstadoDTO;
+import Modelos.DTO.CondicionDTO;
 import Modelos.DTO.OrdenDTO;
 import Modelos.DTO.PedidoCompraDTO;
 import Modelos.DTO.ProveedorDTO;
@@ -18,10 +18,13 @@ import java.util.List;
 public interface OrdenDAO {
     public boolean generarorden( OrdenDTO dto);
     public boolean anularorden( OrdenDTO dto);
+    public boolean aprobarorden( OrdenDTO dto);
     public List<OrdenDTO> recuperarOrden(OrdenDTO dto);
-    public List<EstadoDTO> getListEstado();
+    public List<CondicionDTO> getListCondicion();
     public List<ProveedorDTO> getListOProveedor();
     public List<PedidoCompraDTO> getListPedido();
     public List<OrdenDTO> getListConsultarTodo(); 
     public List<PedidoCompraDTO> recuperarPedido(OrdenDTO dto);
+    public List<OrdenDTO> getListcodigoS();
+
 }

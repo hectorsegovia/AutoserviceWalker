@@ -190,7 +190,7 @@ function prepararJsonPedidos(ban) {
         "fecha": $('#fecha').val().length <= 0 ? "0" : $('#fecha').val(),
         "estado": $('#id_estado').val().length <= 0 ? "0" : $('#id_estado').val(),
         "id_usuario": $('#id_usuario').val().length <= 0 ? "0" : $('#id_usuario').val(),
-        "id_sucursal": $('#id_usuario').val().length <= 0 ? "0" : $('#id_sucursal').val(),
+        "id_sucursal": $('#id_sucursal').val().length <= 0 ? "0" : $('#id_sucursal').val(),
         "observacion": $('#observacion').val().length <= 0 ? "0" : $('#observacion').val(),
         "lista_mercaderias": listamercaderia.length <= 0 ? "0" : listamercaderia
     };

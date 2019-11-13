@@ -1,10 +1,12 @@
 var PedidoJSON;
 var jsonCabDetP;
 var total;
+CargarTablaCodigosS();
 CargarTablaProveedor();
-CargarTablaEstado();
+CargarTablaCondicion();
 CargarTablaPedido();
 CargarTablaOrden();
+
 
 
 function verificar() {
@@ -15,7 +17,6 @@ function verificar() {
     } else {
         prepararJsonorden(accion);
         alert('Registro Guardado');
-        limpiarorden();
     }
 }
 
@@ -58,6 +59,26 @@ function anularorden() {
 function recuperarorden() {
     accion = 3;
 }
+
+
+function aprobarorden() {
+    accion = 10;
+    aprobar();
+}
+
+function aprobar() {
+    confirmar = confirm("Estas seguro que querés aprobar el registro???");
+    if (confirmar) {
+        prepararJsonorden(accion);
+        alert('Registro Aprobado');
+        limpiarorden();
+        CargarTablaOrden();
+    } else {
+        limpiarorden();
+    }
+}
+
+
 
 function grabarorden() {
     switch (accion) {
@@ -152,7 +173,7 @@ function prepararJsonorden(ban) {
             id_mercaderia: $(this).find("td").eq(0).html(),
             cantidad: $(this).find("td").eq(2).html(),
             precio: $(this).find("td").eq(3).html(),
-            total: $(this).find("td").eq(4).html()
+            id_impuesto: 1
 //            monto: $(this).find("td").eq(3).html()
         });
     });
@@ -165,8 +186,10 @@ function prepararJsonorden(ban) {
         "fecha": $('#fecha').val().length <= 0 ? "0" : $('#fecha').val(),
         "id_usuario": $('#id_usuario').val().length <= 0 ? "0" : $('#id_usuario').val(),
         "id_pedido": $('#id_pedido').val().length <= 0 ? "0" : $('#id_pedido').val(),
-        "id_estado": $('#id_estadolistado').val().length <= 0 ? "0" : $('#id_estadolistado').val(),
+        "id_condicion": $('#id_condicion').val().length <= 0 ? "0" : $('#id_condicion').val(),
         "id_proveedor": $('#id_proveedor').val().length <= 0 ? "0" : $('#id_proveedor').val(),
+        "observacion": $('#observacion').val().length <= 0 ? "0" : $('#observacion').val(),
+        "estado": $('#id_estado').val().length <= 0 ? "0" : $('#id_estado').val(),
         "lista_mercaderias": listamercaderia.length <= 0 ? "0" : listamercaderia
     };
     envioo();
@@ -208,12 +231,18 @@ function Recuperarorden() {
                     document.getElementById('id_proveedor').value = json[x].id_proveedor;
                     document.getElementById('descrip_proveedor').value = json[x].nombre_proveedor;
                     document.getElementById('id_pedido').value = json[x].id_pedido;
+                    document.getElementById('sucursal_pedido').value = json[x].nombre_sucursal;
+                    document.getElementById('observacion').value = json[x].observacion;
+//                    document.getElementById('estado').value = json[x].estado;
                     for (d in json[x].lista_mercaderias) {
                         $('#tabladetalleorden').append("<tr id=\'prod" + tindex + "\'>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].id_mercaderia + "</td>\n\
                                 <td style=' width: 60%;'>" + json[x].lista_mercaderias[d].descripcion + "</td>\n\
-                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].precio + "</td>\n\
+                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
+                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].exenta + "</td>\n\
+                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva5 + "</td>\n\
+                                <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva10 + "</td>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].total + "</td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 444 + "," + tindex + ")\" src='../Recursos/img/update.png'/></td>\n\
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 555 + "," + tindex + ")\" src='../Recursos/img/delete.png'/></td>\n\
@@ -260,7 +289,7 @@ function getTDpedido(obj) {
 
 }
 
-function CargarTablaEstado() {
+function CargarTablaCondicion() {
     // 1. Instantiate XHR - Start 
     var xhr;
     if (window.XMLHttpRequest)//verifica que el navegador tenga soporte
@@ -278,9 +307,9 @@ function CargarTablaEstado() {
                 var filas = "";
                 for (i = 0; i < json.length; i++) {
 
-                    filas += "<option value= " + json[i].id_estado + ">" + json[i].descripcion + "</option>";
+                    filas += "<option value= " + json[i].id_condicion + ">" + json[i].descripcion + "</option>";
                 }
-                document.getElementById("id_estadolistado").innerHTML = filas;
+                document.getElementById("id_condicion").innerHTML = filas;
 
             }
         }
@@ -485,6 +514,8 @@ function RecuperarPedidos() {
             {
                 var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
                 var x;
+                var iva5 = 0;
+                var iva10 = 0;
                 var total = 0;
                 var d;
                 var tindex;
@@ -500,7 +531,7 @@ function RecuperarPedidos() {
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].id_mercaderia + "</td>\n\
                                 <td style=' width: 60%;'>" + json[x].lista_mercaderias[d].descripcion + "</td>\n\
                                 <td style=' width: 5%;'>" + json[x].lista_mercaderias[d].precio + "</td>\n\
-                                \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
+                                \n\<td contenteditable='true' style=' width: 5%;'>" + json[x].lista_mercaderias[d].cantidad + "</td>\n\
                                 \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].exenta + "</td>\n\
                                 \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva5 + "</td>\n\
                                 \n\<td style=' width: 5%;'>" + json[x].lista_mercaderias[d].iva10 + "</td>\n\
@@ -509,15 +540,57 @@ function RecuperarPedidos() {
                                 <td style=' width: 5%;'><img onclick=\"$(\'#prod" + tindex + "\').remove();updateMonto(" + 555 + "," + tindex + ")\" src='../Recursos/img/delete.png'/></td>\n\
                           </tr>");
                         total += json[x].lista_mercaderias[d].total;
+                        iva5 += json[x].lista_mercaderias[d].iva5;
+                        iva10 += json[x].lista_mercaderias[d].iva10;
                                 
                     }
 //                    debugger;
                     document.getElementById('precio_total').value = total;
+                    var total_iva5 = Math.round(iva5 / 21); 
+                    document.getElementById('total_iva5').value = total_iva5;
+                    var total_iva10 = Math.round(iva10 / 11);
+                    document.getElementById('total_iva10').value = total_iva10;
+                    var total_iva = total_iva5 + total_iva10;
+                    document.getElementById('total_iva').value = total_iva;
                 }
             }
         }
     };
     xhr.open('POST', '/AutoserviceWalker/OrdenCTRL');
     xhr.send(JSON.stringify(datos = {bandera: 8, id_pedido: $('#id_pedido').val()}));
+    // 3. Specify your action, location and Send to the server - End
+}
+
+
+
+function CargarTablaCodigosS() {
+    // 1. Instantiate XHR - Start 
+    var xhr;
+    if (window.XMLHttpRequest)//verifica que el navegador tenga soporte
+        xhr = new XMLHttpRequest();
+    else if (window.ActiveXObject)
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+    else
+        throw new Error("Ajax is not supported by your browser");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 && xhr.status < 300)
+            {
+                var json = JSON.parse(xhr.responseText); //reponseText returns the entire JSON file and we assign it to a javascript variable "json".
+                var i;
+                var filas = "";
+                var idTD = "td_";
+                var idTD = "td_";
+                for (i = 0; i < json.length; i++) {
+                document.getElementById("id_orden").value = json[i].id_orden;
+            }
+            }
+        }
+    };
+    // 2. Handle Response from Server - End
+
+    // 3. Specify your action, location and Send to the server - Start   
+    xhr.open('POST', '/AutoserviceWalker/OrdenCTRL');
+    xhr.send(JSON.stringify(datos = {bandera: 9}));
     // 3. Specify your action, location and Send to the server - End
 }
