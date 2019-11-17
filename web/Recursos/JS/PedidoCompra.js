@@ -314,7 +314,7 @@ function CargarTablaMercaderia() {
     };
     // 2. Handle Response from Server - End
 
-    // 3. Specify your action, location and Send to the server - Start   
+    // 3. Specify your action, location and Send to the se                                                                                                                                                                                                                                                      |rver - Start   
     xhr.open('POST', '/AutoserviceWalker/PedidoCompraCTRL');
     xhr.send(JSON.stringify(datos = {bandera: 4}));
     // 3. Specify your action, location and Send to the server - End
@@ -427,14 +427,6 @@ function CargarTablaPedido() {
     xhr.send(JSON.stringify(datos = {bandera: 6}));
     // 3. Specify your action, location and Send to the server - End
 }
-
-
-
-
-
-
-
-
 
 
 

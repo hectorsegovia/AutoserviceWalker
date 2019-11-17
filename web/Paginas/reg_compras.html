@@ -18,19 +18,19 @@
                             <tr>
                         <label><h3>REGISTRAR COMPRAS</h3></label>
                         <td><label>Fecha</label></td>
-                        <td><input type="text" id="reg_compra" size="10px" required></td>
+                        <td><input type="text" id="fecha_factura" disabled="true" size="10px" required></td>
                         </tr>
                         <tr>
                             <td><label>Usuario </label></td>
-                            <td><input type="text" id="id_user" size="10px" placeholder="ID_Usuario"/> <input type="text" id="descrip_usuario" size="30px" placeholder="Nombre" disabled="true"/></td>
+                            <td><input type="text" disabled="true" id="id_user" value="1" size="10px" placeholder="ID_Usuario"/> <input type="text" id="descrip_usuario" size="30px" value="HECTOR" placeholder="Nombre" disabled="true"/></td>
                         </tr>
                         <tr>
                             <td><label>Nro Factura/Fecha </label></td>
-                            <td><input type="text" id="nro_factura" size="10px" placeholder="Nro Factura"/> <input type="text" id="fecha_fact" size="30px" placeholder="Fecha Factura" disabled="true"/></td>
+                            <td><input type="text" id="nro_factura" size="10px" placeholder="Nro Factura"/> <input type="text" id="fecha_fact" size="30px" placeholder="Fecha Factura"/></td>
                         </tr>
                         <tr>
                             <td><label>Nro Timbrado/Fecha </label></td>
-                            <td><input type="text" id="nro_factura" size="10px" placeholder="Nro Factura"/> <input type="text" id="fecha_fact" size="30px" placeholder="Fecha Factura" disabled="true"/></td>
+                            <td><input type="text" id="num_timbrado" size="10px" placeholder="Nro Factura"/> <input type="text" id="fecha_timbrado" size="30px" placeholder="Fecha Factura"/></td>
                         </tr>
                         <tr>
                             <td><label>Orden Compras </label></td>
@@ -38,31 +38,40 @@
                                     if (event.keyCode === 13) {
                                         document.getElementById('buscador_orden2').style.display = 'block';
                                     }" disabled="true"/>
-                                <!--<input type="text" id="sucursal_pedido" size="30px" placeholder="Sucursal" disabled="true"/>--> 
                                 <input type="button" value="Agregar" id="opcionGrabarOrden" onclick="document.getElementById('buscador_orden2').style.display = 'block';" type="button"/>
                             </td>
                         </tr>
                         <tr>
                             <td><label>Proveedor</label></td>
-                            <td><input type="text" id="nro_factura" size="10px" placeholder="Nro Factura"/> <input type="text" id="fecha_fact" size="30px" placeholder="Fecha Factura" disabled="true"/></td>
+                            <td><input type="text" disabled="true" id="id_proveedor" size="10px" placeholder="Proveedor"/> <input type="text" id="nombre_proveedor" size="30px" placeholder="Nombre" disabled="true"/></td>
                         </tr>
-                        <tr>
-                            <td><label>Condicion Compra</label></td>
-                            <td><input type="text" id="id_ordenn" size="10px" placeholder="Condiciones" onkeypress="
-                                    if (event.keyCode === 13) {
-                                        document.getElementById('buscador_orden2').style.display = 'block';
-                                    }" disabled="true"/>
-                                <!--<input type="text" id="sucursal_pedido" size="30px" placeholder="Sucursal" disabled="true"/>--> 
-                                <input type="button" value="Agregar" id="opcionGrabarOrden" onclick="document.getElementById('buscador_orden2').style.display = 'block';" type="button"/>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td><label>Condicion </label></td>
-                            <td><select  class="w3-left w3-input w3-round w3-border" disabled="true" id="id_estadolistado"></select> </td>
+                            <td><select  class="w3-left w3-input w3-round w3-border" id="id_condicionlistado"></select> </td>
                         </tr>
+
                         <tr>
-                            <td><label>Estado </label></td>
-                            <td><select  class="w3-left w3-input w3-round w3-border" disabled="true" id="id_estadolistado"></select> </td>
+                            <td><label>Condicion Compra </label></td>
+                            <td><select  class="w3-left w3-input w3-round w3-border" id="id_condicioncompra"></select> </td>
+                        </tr>
+                        <!--                        <tr>
+                                                    <td><label>Condicion Compra</label></td>
+                                                    <td><input type="text" id="id_ordenn" size="10px" placeholder="Condiciones" onkeypress="
+                                                            if (event.keyCode === 13) {
+                                                                document.getElementById('buscador_orden2').style.display = 'block';
+                                                            }" disabled="true"/>
+                                                        <input type="text" id="sucursal_pedido" size="30px" placeholder="Sucursal" disabled="true"/> 
+                                                        <input type="button" value="Agregar" id="opcionGrabarOrden" onclick="document.getElementById('buscador_orden2').style.display = 'block';" type="button"/>
+                                                    </td>
+                                                </tr>-->
+                        <tr>
+                            <td><label>Estado</label></td>
+                            <td>
+                                <input class="w3-left w3-input w3-round w3-border" disabled="true" value="PENDIENTE" id="id_estado" SIZE=1/> 
+                                    
+                                
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Datos de Mercaderia </label></td>
@@ -94,21 +103,21 @@
             </div>
             <center>
                 <label>IVA 5%</label>
-                <input type="text" id="precio_total" size="10px" placeholder="IVA 5%" disabled="true"/>
+                <input type="text" id="total_iva5" size="10px" placeholder="IVA 5%" disabled="true"/>
                 <label>IVA 10%</label>
-                <input type="text" id="precio_total" size="10px" placeholder="IVA 10%" disabled="true"/>
+                <input type="text" id="total_iva10" size="10px" placeholder="IVA 10%" disabled="true"/>
                 <label>Total IVA</label>
-                <input type="text" id="precio_total" size="10px" placeholder="Total IVA" disabled="true"/>
+                <input type="text" id="total_iva" size="10px" placeholder="Total IVA" disabled="true"/>
                 <label>TotaL</label>
                 <input type="text" id="precio_total" size="10px" placeholder="Total" disabled="true"/>
                 <div>
                     <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="generarRegCompra();">
                         <i class="fa fa-close fa-lg"></i>
-                        Generar Orden
+                        Generar Factura
                     </button>
                     <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" onclick=" document.getElementById('buscardor_regcompras').style.display = 'block'; anularRegCompra();" type="button">
                         <i class="fa fa-close fa-lg"></i>
-                        Anular Orden
+                        Anular Factura
                     </button>
                     <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="grabarRegCompras();">
                         <i class="fa fa-close fa-lg"></i>
@@ -117,6 +126,10 @@
                     <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="limpiarRegCompra();">
                         <i class="fa fa-close fa-lg"></i>
                         Cancelar
+                    </button> 
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="aprobarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Aprobar
                     </button> 
                 </div>
             </center>
@@ -136,7 +149,6 @@
                                 <table style="border: 1px"> 
                                     <thead>
                                         <tr>
-                                            <th  style=" width: 5%;">Codigo</th>
                                             <th  style=" width: 30%;">Nro. Fact</th>
                                             <th  style=" width: 30%;">Fecha Fact</th>
                                             <th  style=" width: 30%;">Proveedor</th>
@@ -236,7 +248,9 @@
 
         //            document.write("<font face=arial, size=3>" + day);
         var accion = (myweekday + "-" + month + "-" + ano);
+        document.getElementById('fecha_factura').value = accion;
         document.getElementById('fecha_fact').value = accion;
+
     </script>
 </div>
 </body>

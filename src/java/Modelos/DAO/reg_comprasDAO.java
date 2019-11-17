@@ -5,6 +5,8 @@
  */
 package Modelos.DAO;
 
+import Modelos.DTO.CondicionDTO;
+import Modelos.DTO.Condiones_compra;
 import Modelos.DTO.EstadoDTO;
 import Modelos.DTO.OrdenDTO;
 import Modelos.DTO.reg_comprasDTO;
@@ -18,10 +20,13 @@ public interface reg_comprasDAO {
     
     public boolean reg_compras( reg_comprasDTO dto);
     public boolean anular_reg_compras( reg_comprasDTO dto);
+    public boolean aprobar_reg_compras( reg_comprasDTO dto);
     public List<reg_comprasDTO> recuperar_reg_compras(reg_comprasDTO dto);
     public List<OrdenDTO> recuperar_OrdenCompras(reg_comprasDTO dto);
     public List<OrdenDTO> getListOrdenCompras();
     public List<EstadoDTO> getListEstado();
+    public List<CondicionDTO> getListCondicion();
+    public List<Condiones_compra> getListCondicioncompra();
     public List<reg_comprasDTO> getListConsultarTodo();
     
 }

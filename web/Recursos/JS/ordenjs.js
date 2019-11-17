@@ -171,8 +171,8 @@ function prepararJsonorden(ban) {
         //push => Agrega un nuevo elemento al Array [listaProductos]
         listamercaderia.push({
             id_mercaderia: $(this).find("td").eq(0).html(),
-            cantidad: $(this).find("td").eq(2).html(),
-            precio: $(this).find("td").eq(3).html(),
+            cantidad: $(this).find("td").eq(3).html(),
+            precio: $(this).find("td").eq(2).html(),
             id_impuesto: 1
 //            monto: $(this).find("td").eq(3).html()
         });

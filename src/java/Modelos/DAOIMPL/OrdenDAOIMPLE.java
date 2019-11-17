@@ -257,7 +257,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
         MercaderiaDTO itemMercaderia;
         try {
 
-            query = "select pe.id_pedido,ds.codigo_barra, mer.descripcion as mercaderias, mer.precio_compra, ds.cantidad, im.descripcion AS impuesto,\n"
+            query = "select pe.id_pedido ,ds.codigo_barra, mer.descripcion as mercaderias, mer.precio_compra, ds.cantidad, im.descripcion AS impuesto,\n"
                     + "	(case when im.descripcion = 10 then \n"
                     + "	(mer.precio_compra * ds.cantidad)\n"
                     + "	else\n"

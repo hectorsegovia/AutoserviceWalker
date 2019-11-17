@@ -101,7 +101,7 @@ public class reg_comprasCTRL extends HttpServlet {
                     out.close();
                 }
                 break;
-                case 8:
+            case 8:
                 response.setContentType("application/json, charset=UTF-8");
                 String jsonCabDett;
                 jsonCabDett = gson.toJson(dao.recuperar_OrdenCompras(dto));
@@ -109,8 +109,32 @@ public class reg_comprasCTRL extends HttpServlet {
                 out.print(jsonCabDett);
                 out.close();
                 break;
+            case 9:
+                System.out.println("Llegamos al caso 7");
+                response.setContentType("application/json, charset=UTF-8");
+                String Ordcondicion = gson.toJson(dao.getListCondicion());
+                System.out.println(Ordcondicion);
+                if (Ordcondicion != null) {
+                    out.println(Ordcondicion);
+                    out.close();
+                }
+                break;
+            case 10:
+                System.out.println("Llegamos al caso 7");
+                response.setContentType("application/json, charset=UTF-8");
+                String Ordcondicionn = gson.toJson(dao.getListCondicioncompra());
+                System.out.println(Ordcondicionn);
+                if (Ordcondicionn != null) {
+                    out.println(Ordcondicionn);
+                    out.close();
+                }
+                break;
+            case 11:
+                dao.aprobar_reg_compras(dto);
+                break;
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
