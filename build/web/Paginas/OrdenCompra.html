@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/ordenjs.js"></script>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js"></script>
+    </head>
+    <body>
+    <center>
+        <div style=" width: 900px; margin:0 auto;">
+            <div   class="w3-panel w3-card w3-blue-grey" style="border: 1px solid;  width: 900px;">
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                        <label><h3>GENERAR ORDEN DE COMPRA</h3></label>
+                        <td><label>Codigo</label></td>
+                        <td><input type="text" id="id_orden" size="10px" onkeydown="
+                                        if (event.keyCode === 13) {
+                                            RecuperarCabDet();
+                                        }" disabled="true" required></td>
+                        </tr>
+                        <tr>
+                            <td><label>Fecha</label></td>
+                            <td><input type="text" id="fecha" size="20px " placeholder="dd-mm-yyyy" disabled="true"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Usuario </label></td>
+                            <td><input type="text" id="id_usuario" disabled="true" value="1" size="10px" placeholder="ID_Usuario"/> <input type="text" id="descrip_usuario" size="30px" value="HECTOR" placeholder="Nombre" disabled="true"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Pedido </label></td>
+                            <td><input type="text" id="id_pedido" size="10px" placeholder="Pedido" disabled="true"/>
+                                <input type="text" id="sucursal_pedido" size="30px" placeholder="Sucursal" disabled="true"/> 
+                                <input type="button" value="Agregar" id="opcionGrabarPedidos" onclick="document.getElementById('buscador_pedidos').style.display = 'block';" type="button"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Proveedor</label></td>
+                            <td><input type="text" id="id_proveedor" size="10px" placeholder="ID_Proveedor" disabled="true"/>
+                                <input type="text" id="descrip_proveedor" size="30px" placeholder="Descripcion" disabled="true"/> 
+                                <input type="button" value="Agregar" id="opcionGrabarProveedor" onclick="document.getElementById('buscador_proveedor').style.display = 'block';" type="button"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Observacion</label></td>
+                            <td><input type="text" id="observacion" size="44px" placeholder="Observacion"/> </td>
+                        </tr>
+                        <tr>
+                            <td><label>Condicion</label></td>
+                            <td>
+                                <select  class="w3-left w3-input w3-round w3-border" id="id_condicion"></select>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td><label>Estado</label></td>
+                            <td>
+                                <SELECT class="w3-left w3-input w3-round w3-border" id="id_estado" SIZE=1> 
+                                    <OPTION VALUE="PENDIENTE">Pendiente</OPTION>
+                                    <OPTION VALUE="FINALIZADO">Aprobado</OPTION>
+                                    <OPTION VALUE="ANULADO">Anulado</OPTION>
+                                </SELECT>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Datos de Mercaderia </label></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div style="border: 1px solid;  width: 900px; height: 200px;">
+                <table border="1" > 
+                    <thead>
+                        <tr>
+                            <th style=" width: 5%;">Codigo</th>
+                            <th style=" width: 15%;">Descripcion</th>
+                            <th style=" width: 10%;">Precio</th>
+                            <th style=" width: 10%;">Cantidad</th>
+                            <th style=" width: 10%;">Exenta</th>
+                            <th style=" width: 15%;">IVA 5%</th>
+                            <th style=" width: 15%;">IVA 10%</th>
+                            <th style=" width: 15%;">SUBTOTAL</th>
+                            <th style=" width: 10%;"><img src="../Recursos/img/update.png"/></th>
+                            <th style=" width: 10%;"><img src="../Recursos/img/delete.png"/></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabladetalleorden">
+
+                    </tbody>
+
+                </table>
+            </div>
+            <label>IVA 5%</label>
+            <input type="text" id="total_iva5" size="10px" placeholder="IVA 5%" disabled="true"/>
+            <label>IVA 10%</label>
+            <input type="text" id="total_iva10" size="10px" placeholder="IVA 10%" disabled="true"/>
+            <label>Total IVA</label>
+            <input type="text" id="total_iva" size="10px" placeholder="Total IVA" disabled="true"/>
+            <label>TotaL</label>
+            <input type="text" id="precio_total" size="10px" placeholder="Total" disabled="true"/>
+            <center>
+                <div>
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="generarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Generar Orden
+                    </button>
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick=" document.getElementById('buscardor_orden').style.display = 'block'; anularorden();" type="button">
+                        <i class="fa fa-close fa-lg"></i>
+                        Anular Orden
+                    </button>
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Modificar
+                    </button> 
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Guardar
+                    </button> 
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limpiarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Cancelar
+                    </button> 
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="aprobarorden();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Aprobar
+                    </button> 
+                </div>
+            </center>
+            </form>
+
+
+            <div id="buscardor_orden" class="w3-modal w3-white">
+                <div class="w3-container">
+                    <center>
+                        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                            <div class="w3-panel w3-card w3-blue-grey">
+                                <h2 class="w3-center">LISTADO DE ORDEN DE COMPRAS</h2>
+                                <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                            </div>
+                            <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                                <div  style="width: 700px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                                <table style="border: 1px"> 
+                                    <thead>
+                                        <tr>
+                                            <th  style=" width: 5%;">Codigo</th>
+                                            <th  style=" width: 30%;">Fecha</th>
+                                            <th  style=" width: 30%;">Pedido</th>
+                                            <th  style=" width: 30%;">Proveedor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="id_ordenlistado">
+                                    </tbody>
+                                </table>  
+                            </div>
+                        </div>
+                        <input type="text" id="filtrosorden" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroOrden();">
+                        <button onclick="cerrarbuscadororden();">
+                            Cancelar
+                        </button>
+                    </center>
+                </div>
+            </div>
+
+            <div id="buscador_proveedor" class="w3-modal w3-white">
+                <div class="w3-container">
+                    <center>
+                        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">
+                            <div class="w3-panel w3-card w3-blue-grey">
+                                <h2 class="w3-center">LISTADO DE PROVEEODORES</h2>
+                                <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                            </div>
+                            <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                                <div  style="width: 500px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                                <table style="border: 1px"> 
+                                    <thead>
+                                        <tr>
+                                            <th  class="w3-white" style=" width: 5%;">Codigo</th>
+                                            <th class="w3-white" style=" width: 30%;">Descripcion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="crpTbProveedor">
+                                    </tbody>
+                                </table>  
+                            </div>
+                        </div>
+                        <input type="text" id="filtrossucursal" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroSucursal();">
+                        <button onclick="cerrarbuscadorproveedor();">
+                            Cancelar
+                        </button>
+                    </center>
+                </div>
+            </div></div></center>
+
+
+
+    <div id="buscador_pedidos" class="w3-modal w3-white">
+        <div class="w3-container">
+            <center>
+                <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">
+                    <div class="w3-panel w3-card w3-blue-grey">
+                        <h2 class="w3-center">LISTADO DE PEDIDOS</h2>
+                        <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                    </div>
+                    <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                        <div  style="width: 500px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                        <table style="border: 1px"> 
+                            <thead>
+                                <tr>
+                                    <th  class="w3-white" style=" width: 5%;">Codigo</th>
+                                    <th class="w3-white" style=" width: 30%;">Fecha</th>
+                                    <th class="w3-white" style=" width: 30%;">Sucursal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="id_pedidolistado">
+                            </tbody>
+                        </table>  
+                    </div>
+                </div>
+                <input type="text" id="filtrospedidos" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroPedidos();">
+                <button onclick="cerrarbuscadorpedido();">
+                    Cancelar
+                </button>
+            </center>
+        </div>
+
+
+
+
+        <script>
+            mydate = new Date();
+            myday = mydate.getDay();
+            mymonth = mydate.getMonth();
+            myweekday = mydate.getDate();
+            var ano = mydate.getFullYear();
+
+            weekday = myweekday;
+
+            if (mymonth === 0)
+                month = "01";
+
+            else if (mymonth === 1)
+                month = "02";
+
+            else if (mymonth === 2)
+                month = "03";
+
+            else if (mymonth === 3)
+                month = "04";
+
+            else if (mymonth === 4)
+                month = "05";
+
+            else if (mymonth === 5)
+                month = "06";
+
+            else if (mymonth === 6)
+                month = "07";
+
+            else if (mymonth === 7)
+                month = "08";
+
+            else if (mymonth === 8)
+                month = "09";
+
+            else if (mymonth === 9)
+                month = "10";
+
+            else if (mymonth === 10)
+                month = "11";
+
+            else if (mymonth === 11)
+                month = "12";
+
+            //            document.write("<font face=arial, size=3>" + day);
+            var accion = (myweekday + "-" + month + "-" + ano);
+            document.getElementById('fecha').value = accion;
+        </script>
+    </div>
+</body>
+</html>

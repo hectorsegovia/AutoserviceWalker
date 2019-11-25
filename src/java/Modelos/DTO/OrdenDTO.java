@@ -25,9 +25,18 @@ public class OrdenDTO {
     private String observacion;
     private Integer id_condicion;
     private String estado;
+    private Integer id_recepcion;
 
     
     private List<MercaderiaDTO> lista_mercaderias;
+
+    public Integer getId_recepcion() {
+        return id_recepcion;
+    }
+
+    public void setId_recepcion(Integer id_recepcion) {
+        this.id_recepcion = id_recepcion;
+    }
 
     public String getNombre_sucursal() {
         return nombre_sucursal;

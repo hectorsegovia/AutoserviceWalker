@@ -25,13 +25,43 @@ public class reg_comprasDTO {
   private String caracter_1;
   private String nombre_provee;
   private Integer condicion_compra;
+  private String nombre_condicion;
   private String num_timbrado;
   private String fecha_timbrado;
   private Integer id_proveedor;
   private String nombre_proveedor;
+  private Integer id_recepcion;
+  private String fecha;
   
   private List<MercaderiaDTO> lista_mercaderias;
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getNombre_condicion() {
+        return nombre_condicion;
+    }
+
+    public void setNombre_condicion(String nombre_condicion) {
+        this.nombre_condicion = nombre_condicion;
+    }
+
+    public Integer getId_recepcion() {
+        return id_recepcion;
+    }
+
+    public void setId_recepcion(Integer id_recepcion) {
+        this.id_recepcion = id_recepcion;
+    }
+
+  
+  
+  
     public Integer getId_proveedor() {
         return id_proveedor;
     }

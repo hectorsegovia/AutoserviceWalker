@@ -1,0 +1,238 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Recursos/CSS/w3_4.css"/>
+        <!--<link rel="stylesheet" href="../Ayuda/AyudaSoporteSYS.pdf"/>-->
+        <script type="text/javascript">
+            function loadDocPdf(bandera, valor, desde, hasta) {
+                var datos;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/AutoserviceWalker/ReportesCTRL?bandera=" + bandera + "&valor=" + valor + "&desde=" + desde + "&hasta=" + hasta + "");
+                xhr.responseType = "arraybuffer";
+
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        var blob = new Blob([xhr.response], {type: "application/pdf"});
+                        var objectUrl = URL.createObjectURL(blob);
+                        window.open(objectUrl, '_blank');
+                    }
+                };
+                xhr.send();
+                // xhr.send(JSON.stringify(datos = {bandera: bandera}));
+                // xhr.send(JSON.stringify(datos = {bandera: 2, id: $('#codigo_presupuesto').val()}));
+            }
+        </script>
+    </head>
+    <body  style="background-image:url(../recursos/img/soporte01.jpg)">
+        <script language="JavaScript">
+            var valordesde = $('#desde').val();
+            var valorhasta = $('#hasta').val();
+            function preguntar() {
+                if (valordesde >= valorhasta) {
+                    alert('El valor desde tiene que ser menor al de hasta');
+                    return;
+                } else {
+
+                }
+            }
+        </script>
+        <div class="pl-light-grey" id="_geco_sticky_main">
+            <div class="w3-panel w3-card w3-blue-grey">
+                <h2 class="w3-center" >GENERAR REPORTES DEL PERFIL DE ADMINISTRACION</h2>
+                <p class="w3-center w3-small">Haga clic en "PDF" para ver el listado.</p>
+            </div>
+        </div>
+        <br>
+        <!--<div style="background-image:url(../recursos/img/soporte01.jpg)" class="w3-container w3-white" id="cont_registrar" style=" margin:0 5% 3% 5%;">-->
+
+        <form class="w3-container" name="form_registrar" action="/registrar.geco" method="POST" enctype="multipart/form-data">
+
+
+            <div class="w3-panel w3-card-4 w3-padding-0" style=" width:750px; margin:0 auto;">
+
+                <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+
+                    <div class="w3-container"><div class="w3-row w3-section">
+                            <div class="w3-col" style=" width:30%;">
+                                <p class="w3-small w3-right">
+
+                                <div>
+                                    <table>
+                                        <tbody>
+                                        <center>
+                                            
+                                                <td>
+                                                    Cargo <br>
+                                                    <input type="button" value=" PDF" onclick="loadDocPdf(1, 0, 0, 0);" />
+                                                </td>
+                                                <td>
+                                                    Usuario <br>
+                                                    <input type="button" value=" PDF" onclick="loadDocPdf(2, 0, 0, 0);" />
+                                                </td>
+                                                <td>
+                                                    Stock <br>
+                                                    <input type="button" value=" PDF" onclick="loadDocPdf(3, 0, 0, 0);" />
+                                                </td>
+
+                                            
+                                        </center>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div></div>
+                    </div>
+                    </form></div></div>
+            <center>
+
+
+
+                <div class="pl-light-grey" id="_geco_sticky_main">
+                    <div class="w3-panel w3-card w3-blue-grey">
+                        <h2 class="w3-center" >GENERAR REPORTES DEL PERFIL DE REFERENCIALES</h2>
+                        <p class="w3-center w3-small">Haga clic en "PDF" para ver el listado.</p>
+                    </div>
+                </div>
+                <br>
+                <!--<div style="background-image:url(../recursos/img/soporte01.jpg)" class="w3-container w3-white" id="cont_registrar" style=" margin:0 5% 3% 5%;">-->
+
+                <form class="w3-container" name="form_registrar" action="/registrar.geco" method="POST" enctype="multipart/form-data">
+
+
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width:1200px; margin:0 auto;">
+
+                        <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+
+                            <div class="w3-container"><div class="w3-row w3-section">
+                                    <div class="w3-col" style=" width:30%;">
+                                        <p class="w3-small w3-right">
+
+                                        <div>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            Tipo Equipo Informatico 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(4, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Tipo Trabajo 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(5, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Repuestos 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(6, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Marca 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(7, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Modelo 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(8, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Servicios
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(9, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Tipo Cliente
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(10, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Tecnico
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(11, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Unidad Perteneciente
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(12, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Direccion Perteneciente
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(13, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Departamento
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(14, 0, 0, 0);" />
+                                                        </td>
+                                                        <td>
+                                                            Cargo 
+                                                            <input type="button" value=" PDF" onclick="loadDocPdf(15, 0, 0, 0);" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div></div>
+                            </div>
+                            </form></div></div>
+                    <center>
+
+                        <div class="pl-light-grey" id="_geco_sticky_main">
+                            <div class="w3-panel w3-card w3-blue-grey">
+                                <h2 class="w3-center" >GENERAR REPORTES DEL PERFIL DE MOVIMIENTOS</h2>
+                                <p class="w3-center w3-small">Haga clic en "PDF" para ver el listado.</p>
+                            </div>
+                        </div>
+                        <br>
+                        <!--<div style="background-image:url(../recursos/img/soporte01.jpg)" class="w3-container w3-white" id="cont_registrar" style=" margin:0 5% 3% 5%;">-->
+
+                        <form class="w3-container" name="form_registrar" action="/registrar.geco" method="POST" enctype="multipart/form-data">
+
+
+                            <div class="w3-panel w3-card-4 w3-padding-0" style=" width:950px; margin:0 auto;">
+
+                                <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+
+                                    <div class="w3-container"><div class="w3-row w3-section">
+                                            <div class="w3-col" style=" width:30%;">
+                                                <p class="w3-small w3-right">
+
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <td>
+                                                                    Orden De Trabajo <br>
+                                                                    <label> Desde</label><input type="text" id="desde1" size="10px " placeholder="Desde"/>
+                                                                    <label> Hasta</label><input type="text" id="hasta1" size="10px " placeholder="Hasta"/>
+                                                                    <input type="button" value="PDF" onclick="loadDocPdf(16, 0, document.getElementById('desde1').value, document.getElementById('hasta1').value);" />
+                                                                </td>
+                                                                <td>
+                                                                    Pedidos <br>
+                                                                    <label> Codigo</label><input type="text" id="desde2" size="10px " placeholder="Desde"/>
+                                                                    <!--<label> Hasta</label><input type="text" id="hasta2" size="10px " placeholder="Hasta"/>-->
+                                                                    <input type="button" value="PDF" onclick="loadDocPdf(17, 0, document.getElementById('desde2').value, 0);" />
+                                                                </td>
+                                                                <td>
+                                                                    Cliente <br>
+                                                                    <label> Desde</label><input type="text" id="desde3" size="10px " placeholder="Desde"/>
+                                                                    <label> Hasta</label><input type="text" id="hasta3" size="10px " placeholder="Hasta"/>
+                                                                    <input type="button" value="PDF" onclick="loadDocPdf(18, 0, document.getElementById('desde3').value, document.getElementById('hasta3').value);" />
+                                                                </td>
+                                                                <td>
+                                                                    Caract. Equipos <br>
+                                                                    <label> Desde</label><input type="text" id="desde4" size="10px " placeholder="Desde"/>
+                                                                    <label> Hasta</label><input type="text" id="hasta4" size="10px " placeholder="Hasta"/>
+                                                                    <input type="button" value="PDF" onclick="loadDocPdf(19, 0, document.getElementById('desde4').value, document.getElementById('hasta4').value);" />
+                                                                </td>
+                                                                <td>
+                                                                    Recepcion <br>
+                                                                    <label> Desde</label><input type="text" id="desde5" size="10px " placeholder="Desde"/>
+                                                                    <label> Hasta</label><input type="text" id="hasta5" size="10px " placeholder="Hasta"/>
+                                                                    <input type="button" value="PDF" onclick="loadDocPdf(20, 0, document.getElementById('desde5').value, document.getElementById('hasta5').value);" />
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div></div>
+                                    </div>
+                                    </form></div>
+                                <center>
+                                    </body>
+                                    </html>

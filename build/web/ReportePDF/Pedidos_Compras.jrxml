@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pedidos_Compras" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f1f831fa-38ed-465d-8101-0d1707fcf773">
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pedidos."id_pedido" AS pedidos_id_pedido,
+     detalle_pedidos."id_pedido" AS detalle_pedidos_id_pedido,
+     detalle_pedidos."id_mercaderia" AS detalle_pedidos_id_mercaderia,
+     detalle_pedidos."cantidad" AS detalle_pedidos_cantidad,
+     mercaderias."descripcion" AS mercaderias_descripcion,
+     mercaderias."id_marca" AS mercaderias_id_marca,
+     marcas."descripcion" AS marcas_descripcion,
+     depositos."descripcion" AS depositos_descripcion,
+     pedidos."fecha" AS pedidos_fecha
+FROM
+     "public"."pedidos" pedidos INNER JOIN "public"."detalle_pedidos" detalle_pedidos ON pedidos."id_pedido" = detalle_pedidos."id_pedido"
+     INNER JOIN "public"."mercaderias" mercaderias ON detalle_pedidos."id_mercaderia" = mercaderias."id_mercaderia"
+     INNER JOIN "public"."depositos" depositos ON detalle_pedidos."id_deposito" = depositos."id_deposito"
+     INNER JOIN "public"."marcas" marcas ON mercaderias."id_marca" = marcas."id_marca"]]>
+	</queryString>
+	<field name="pedidos_id_pedido" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_id_pedido" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_id_mercaderia" class="java.lang.Integer"/>
+	<field name="detalle_pedidos_cantidad" class="java.lang.Integer"/>
+	<field name="mercaderias_descripcion" class="java.lang.String"/>
+	<field name="mercaderias_id_marca" class="java.lang.Integer"/>
+	<field name="marcas_descripcion" class="java.lang.String"/>
+	<field name="depositos_descripcion" class="java.lang.String"/>
+	<field name="pedidos_fecha" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

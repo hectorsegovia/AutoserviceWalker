@@ -176,6 +176,10 @@
         <servlet-name>NotacreditocompraCTRL</servlet-name>
         <servlet-class>Controlador.NotacreditocompraCTRL</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecepcionesCTRL</servlet-name>
+        <servlet-class>Controlador.RecepcionesCTRL</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CargoCTRL</servlet-name>
         <url-pattern>/CargoCTRL</url-pattern>
@@ -351,6 +355,10 @@
     <servlet-mapping>
         <servlet-name>NotacreditocompraCTRL</servlet-name>
         <url-pattern>/NotacreditocompraCTRL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecepcionesCTRL</servlet-name>
+        <url-pattern>/RecepcionesCTRL</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

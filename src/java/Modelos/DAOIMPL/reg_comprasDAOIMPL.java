@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,22 +101,7 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                     ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
                     return false;
                 }
-                for (MercaderiaDTO item : dto.getLista_mercaderias()) {
-                    query = "UPDATE stock\n"
-                            + "   SET cantidad=(select cantidad from stock where codigo_barra=?) - ?\n"
-                            + " WHERE codigo_barra=? and id_deposito=?;";
-                    ps = ConexionDB.getRutaConexion().prepareStatement(query);
-                    ps.setString(1, item.getId_mercaderia());
-                    ps.setInt(2, item.getCantidad());
-                    ps.setString(3, item.getId_mercaderia());
-                    ps.setInt(4, 1);
-                    if (ps.executeUpdate() <= 0) {
-                        ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
-                        return false;
-                    }
-                }
                 ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
-
                 return true;
             } else {
                 ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
@@ -232,28 +218,24 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
         List<MercaderiaDTO> listaMercaderia;
         MercaderiaDTO itemMercaderia;
         try {
-            query = "select pe.id_ordencompra, pe.id_proveedor, pro.nombre, ds.codigo_barra, mer.descripcion as mercaderias, mer.precio_compra, ds.cantidad, im.descripcion AS impuesto,\n"
-                    + "                    (case when im.descripcion = 10 then \n"
-                    + "                    (mer.precio_compra * ds.cantidad)\n"
-                    + "                   	else\n"
-                    + "                    	'0' end) as \"IVA 10%\", \n"
-                    + "                   	(case when im.descripcion = 5 then \n"
-                    + "                   	(mer.precio_compra * ds.cantidad)\n"
-                    + "                   	else\n"
-                    + "                    	'0' end) as \"IVA 5%\",\n"
-                    + "                   	(case when im.descripcion = 0 then \n"
-                    + "                    	(mer.precio_compra * ds.cantidad)\n"
-                    + "                    	else\n"
-                    + "                  	'0' end) as \"EXENTA\"\n"
-                    + "                   FROM orden_compras pe \n"
-                    + "			INNER JOIN condicion_compras condi ON pe.idcondicion_compra=condi.idcondicion_compra\n"
-                    + "			INNER JOIN proveedores pro ON pe.id_proveedor=pro.id_proveedor\n"
-                    + "			INNER JOIN usuarios usu ON pe.id_usuario=usu.id_usuario\n"
-                    + "			INNER JOIN pedidos pedid ON pe.id_pedido=pedid.id_pedido\n"
-                    + "                   	INNER JOIN detalle_ordencompras ds ON pe.id_ordencompra=ds.id_ordencompra\n"
-                    + "			INNER JOIN mercaderias mer ON ds.codigo_barra=mer.codigo_barra\n"
-                    + "                   	INNER JOIN impuestos im ON im.id_impuesto=mer.id_impuesto\n"
-                    + "                 	WHERE pe.id_ordencompra=? and pe.estado='APROBADO'";
+            query = "select ord.id_ordencompra, ord.id_proveedor, pro.nombre, ds.codigo_barra, mer.descripcion as mercaderias, SUM(ds.cantidad_recibida) as recibido, da.cantidad, da.precio,\n"
+                    + "                                       (case when im.descripcion = 10 then\n"
+                    + "                                                         	(da.precio * SUM(ds.cantidad_recibida))\n"
+                    + "                                                          	else\n"
+                    + "                                                          	'0' end) as \"IVA 10%\", \n"
+                    + "                                                           	(case when im.descripcion = 5 then \n"
+                    + "                                                            	(da.precio * SUM(ds.cantidad_recibida))\n"
+                    + "                                                        	else\n"
+                    + "                                                          '0' end) as \"IVA 5%\",\n"
+                    + "                                                          	(case when im.descripcion = 0 then \n"
+                    + "                                                          	(da.precio * SUM(ds.cantidad_recibida))\n"
+                    + "                                                           	else\n"
+                    + "                                                        	'0' end) as \"EXENTA\"\n"
+                    + "                                       from orden_compras ord, proveedores pro, mercaderias mer, detalle_recepciones ds, recepciones re, detalle_ordencompras da, impuestos im\n"
+                    + "                                       where pro.id_proveedor=ord.id_proveedor and mer.codigo_barra=ds.codigo_barra \n"
+                    + "                                       and ord.id_ordencompra=re.id_ordencompra and re.id_recepcion=ds.id_recepcion\n"
+                    + "                                      and ord.id_ordencompra=da.id_ordencompra and mer.codigo_barra=da.codigo_barra and im.id_impuesto=mer.id_impuesto  and ord.id_ordencompra=? and ds.estado='PENDIENTE'\n"
+                    + "                                     group by ord.id_ordencompra, ord.id_proveedor, pro.nombre, ds.codigo_barra, mer.descripcion, da.cantidad, da.precio, im.descripcion";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_ordencompra());
             System.out.println("Codigo" + dto.getId_ordencompra());
@@ -269,12 +251,13 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
                 itemMercaderia = new MercaderiaDTO();
                 itemMercaderia.setId_mercaderia(rs.getString("codigo_barra"));
                 itemMercaderia.setDescripcion(rs.getString("mercaderias"));
-                itemMercaderia.setPrecio(rs.getInt("precio_compra"));
+                itemMercaderia.setPrecio(rs.getInt("precio"));
                 itemMercaderia.setCantidad(rs.getInt("cantidad"));
+                itemMercaderia.setCantidad_recibida(rs.getInt("recibido"));
                 itemMercaderia.setExenta(rs.getInt("EXENTA"));
                 itemMercaderia.setIva5(rs.getInt("IVA 5%"));
                 itemMercaderia.setIva10(rs.getInt("IVA 10%"));
-                itemMercaderia.setTotal(rs.getInt("precio_compra") * rs.getInt("cantidad"));
+                itemMercaderia.setTotal(rs.getInt("precio") * rs.getInt("recibido"));
                 listaMercaderia.add(itemMercaderia);
                 item.setLista_mercaderias(listaMercaderia);
             }
@@ -292,14 +275,18 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
         try {
             List<OrdenDTO> lista;
             OrdenDTO dto;
-            query = "SELECT o.id_ordencompra, o.fecha, p.id_pedido, pro.nombre FROM proveedores pro, pedidos p, orden_compras o\n"
-                    + "where p.id_pedido=o.id_pedido and pro.id_proveedor=o.id_proveedor and o.estado='APROBADO'";
+            query = "SELECT o.id_ordencompra, o.fecha, p.id_pedido, pro.nombre, re.id_recepcion \n"
+                    + "                                       FROM proveedores pro, pedidos p, orden_compras o, recepciones re, detalle_recepciones dr, mercaderias mer \n"
+                    + "                                        where p.id_pedido=o.id_pedido and pro.id_proveedor=o.id_proveedor  and re.id_recepcion=dr.id_recepcion and mer.codigo_barra=dr.codigo_barra\n"
+                    + "                                       and o.id_ordencompra=re.id_ordencompra and o.estado='FINALIZADO' and dr.estado='PENDIENTE'\n"
+                    + "                                      group by o.id_ordencompra, o.fecha, p.id_pedido, pro.nombre, re.id_recepcion";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new OrdenDTO();
                 dto.setId_orden(rs.getInt("id_ordencompra"));
+                dto.setId_recepcion(rs.getInt("id_recepcion"));
                 dto.setFecha(rs.getString("fecha"));
                 dto.setNombre_proveedor(rs.getString("nombre"));
                 lista.add(dto);
@@ -360,13 +347,13 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
         try {
             List<Condiones_compra> lista;
             Condiones_compra dto;
-            query = "SELECT id_comprobante, descripcion FROM tipo_comprobante ORDER BY id_comprobante;";
+            query = "SELECT idcondicion_compra, descripcion FROM condicion_compras ORDER BY idcondicion_compra;";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             rs = ps.executeQuery();
             lista = new ArrayList<>();
             while (rs.next()) {
                 dto = new Condiones_compra();
-                dto.setId_condicioncompra(rs.getInt("id_comprobante"));
+                dto.setId_condicioncompra(rs.getInt("idcondicion_compra"));
                 dto.setDescripcion(rs.getString("descripcion"));
                 lista.add(dto);
             }
@@ -385,27 +372,71 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setString(1, dto.getNum_factura());
             if (ps.executeUpdate() > 0) {
+                query = "UPDATE orden_compras set estado='FACTURADO' where id_ordencompra=?";
+                ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                ps.setInt(1, dto.getId_ordencompra());
+                if (ps.executeUpdate() <= 0) {
+                    ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                    return false;
+                }
+                query = "UPDATE recepciones set estado='FACTURADO' where id_recepcion=?";
+                ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                ps.setInt(1, dto.getId_recepcion());
+                if (ps.executeUpdate() <= 0) {
+                    ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                    return false;
+                }
                 for (MercaderiaDTO item : dto.getLista_mercaderias()) {
-                    query = "UPDATE stock SET cantidad=(select cantidad from stock where codigo_barra=?) + ? WHERE codigo_barra=? and id_deposito=?;";
+                    query = "UPDATE detalle_recepciones set estado='FACTURADO' where codigo_barra=? and id_recepcion=? ";
                     ps = ConexionDB.getRutaConexion().prepareStatement(query);
                     ps.setString(1, item.getId_mercaderia());
-                    ps.setInt(2, item.getCantidad());
-                    ps.setString(3, item.getId_mercaderia());
-                    ps.setInt(4, 1);
+                    ps.setInt(2, dto.getId_recepcion());
                     if (ps.executeUpdate() <= 0) {
                         ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
                         return false;
                     }
-                    query = "UPDATE orden_compras set estado='FINALIZADO' where id_ordencompra=?";
-                    ps = ConexionDB.getRutaConexion().prepareStatement(query);
-                    ps.setInt(1, dto.getId_ordencompra());
-                    if (ps.executeUpdate() <= 0) {
-                        ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
-                        return false;
-                    }
-                    ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
-                    return true;
                 }
+                if (dto.getNombre_condicion() == "CREDIDO 30, 60, 90") {
+                    for (int x = 0; x <= 3; x++) {
+                        query = "INSERT INTO cuenta_pagar(num_factura, fecha_factura, id_ordencompra, nro_proveedor, vto_cuota, monto_pagar, monto_pagado, saldo)\n"
+                                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                        ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                        ps.setString(1, dto.getNum_factura());
+                        ps.setDate(2, Genericos.Genericos.retornarFecha(dto.getFecha_factura()));
+                        ps.setInt(3, dto.getId_ordencompra());
+                        ps.setInt(4, dto.getId_proveedor());
+                        ps.setDate(5, Genericos.Genericos.retornarFecha(dto.getFecha()));
+                        ps.setInt(6, 0);
+                        ps.setInt(7, 0);
+                        ps.setInt(8, 0);
+                        if (ps.executeUpdate() <= 0) {
+                            ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                            return false;
+                        }
+                    }
+                } else if (dto.getNombre_condicion() == "CREDITO 15, 30, 45") {
+                    for (int x = 0; x <= 3; x++) {
+                        query = "INSERT INTO cuenta_pagar(num_factura, fecha_factura, id_ordencompra, nro_proveedor, vto_cuota, monto_pagar, monto_pagado, saldo)\n"
+                                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                        ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                        ps.setString(1, dto.getNum_factura());
+                        ps.setDate(2, Genericos.Genericos.retornarFecha(dto.getFecha_factura()));
+                        ps.setInt(3, dto.getId_ordencompra());
+                        ps.setInt(4, dto.getId_proveedor());
+                        ps.setInt(5, 0);
+                        ps.setInt(6, 0);
+                        ps.setInt(7, 0);
+                        ps.setInt(8, 0);
+                        if (ps.executeUpdate() <= 0) {
+                            ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                            return false;
+                        }
+                    }
+
+                }
+                ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
+                return true;
+
             } else {
                 ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
                 return false;
@@ -418,6 +449,5 @@ public class reg_comprasDAOIMPL implements reg_comprasDAO {
             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
             return false;
         }
-        return false;
     }
 }

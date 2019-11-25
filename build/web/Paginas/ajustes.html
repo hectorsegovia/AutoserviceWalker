@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/ajustesJS.js"></script>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js"></script>
+    </head>
+    <body>
+    <center>
+        <div style=" width: 900px; margin:0 auto;">
+            <div   class="w3-panel w3-card w3-blue-gray" style="border: 1px solid;  width: 900px;">
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                        <label><h3>REGISTRAR AJUSTES</h3></label>
+                        <td><label>Codigo</label></td>
+                        <td><input type="text" id="id_ajuste" size="10px" onkeydown="
+                                if (event.keyCode === 13) {
+                                }" required></td>
+                        </tr>
+                        <tr>
+                            <td><label>Usuario </label></td>
+                            <td><input type="text" id="id_usuario" size="10px" placeholder="ID_Usuario"/> <input type="text" id="descrip_usuario" size="30px" placeholder="Nombre" disabled="true"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Fecha </label></td>
+                            <td><input type="text" id="fecha_ajuste" size="30px" placeholder="Fecha" disabled="true"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Observacion </label></td>
+                            <td><input type="text" id="observacion" size="10px" placeholder="Obs.." onkeypress="
+                                    if (event.keyCode === 13) {
+                                        document.getElementById('buscador_orden2').style.display = 'block';
+                                    }"/>
+                                <!--<input type="text" id="sucursal_pedido" size="30px" placeholder="Sucursal" disabled="true"/>--> 
+                                <!--<input type="button" value="Agregar" id="opcionGrabarOrden" onclick="document.getElementById('buscador_orden2').style.display = 'block';" type="button"/>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Sucursal </label></td>
+                            <td><input type="text" id="id_sucursal" size="10px" placeholder="Codigo" disabled="true" onkeypress="
+                                    if (event.keyCode === 13) {
+                                        document.getElementById('buscardor_Sucursal').style.display = 'block';
+                                    }"/> <input type="text" id="nom_sucursal" size="30px" placeholder="Sucursal" disabled="true"/>
+                            <input type="button" value="Agregar" id="opcionGrabarOrden" onclick="document.getElementById('buscardor_Sucursal').style.display = 'block';" type="button"/>
+                            </td>
+                      
+                        </tr>
+                        <tr>
+                            <td><label>Datos de Mercaderia </label></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <label>Codigo</label><input type="text" onkeydown="
+                                    if (event.keyCode === 13) {
+                                        document.getElementById('buscardormercaderias').style.display = 'block';
+                                    }
+                                    if (event.keyCode === 13) {
+                                        //LLAMAR AL BUSCADOR DE PRODUCTOS
+                                    }"id="id_mercaderia" size="2px" placeholder="Cod."/>
+                                <label>Descripcion</label> <input type="text" id="descrip_mercaderia" size="15px" placeholder="Descripción del Servicio" disabled="true"/>
+                                <label>Cantidad</label><input type="text" id="cantidad" size="6px" placeholder="Cantidad"/>
+                                <label>Cod</label><input type="text" id="id_motivo" onkeypress="
+                                        if (event.keyCode === 13) {
+                                            document.getElementById('buscador_Motivo').style.display = 'block';
+                                        }" size="2px" placeholder="Cod."/>
+                                <label>Motivo</label><input type="text" id="nom_motivo" size="9px" placeholder="Motivo" disabled="true"/>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div style="border: 1px solid;  width: 900px; height: 200px;">
+                <table border="1" > 
+                    <thead>
+                        <tr>
+                            <th style=" width: 5%;">Codigo</th>
+                            <th style=" width: 20%;">Descripcion</th>
+                            <th style=" width: 15%;">Cantidad</th>
+                            <th style=" width: 15%;">Cod</th>
+                            <th style=" width: 15%;">Motivo</th>
+                            <th style=" width: 10%;"><img src="../Recursos/img/update.png"/></th>
+                            <th style=" width: 10%;"><img src="../Recursos/img/delete.png"/></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabladetalleRegAjustes">
+
+                    </tbody>
+                </table>
+            </div>
+            <center>
+                <div>
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="generarRegAjustes();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Generar Orden
+                    </button>
+                    <!--                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" onclick=" document.getElementById('buscardor_regcompras').style.display = 'block'; anularRegCompra();" type="button">
+                                            <i class="fa fa-close fa-lg"></i>
+                                            Anular Orden
+                                        </button>-->
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="grabarRegAjustes();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Guardar
+                    </button> 
+                    <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-brown w3-large" type="button"  onclick="limpiarRegAjustes();">
+                        <i class="fa fa-close fa-lg"></i>
+                        Cancelar
+                    </button> 
+                </div>
+            </center>
+            </form>
+
+
+            <div id="buscardor_Sucursal" class="w3-modal w3-white">
+                <div class="w3-container">
+                    <center>
+                        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                            <div class="w3-panel w3-card w3-blue-gray">
+                                <h2 class="w3-center">LISTADO DE SUCURSALES</h2>
+                                <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                            </div>
+                            <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                                <div  style="width: 700px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                                <table style="border: 1px"> 
+                                    <thead>
+                                        <tr>
+                                            <th  style=" width: 5%;">Codigo</th>
+                                            <th  style=" width: 30%;">Sucursal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="id_Consultar_Suc">
+                                    </tbody>
+                                </table>  
+                            </div>
+                        </div>
+                        <input type="text" id="filtrosSucursal" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroSucursal();">
+                        <button onclick="cerrarbuscadorSucursal();">
+                            Cancelar
+                        </button>
+                    </center>
+                </div>
+            </div>
+        </div></div></center>
+
+<div id="buscador_Motivo" class="w3-modal w3-white">
+    <div class="w3-container">
+        <center>
+            <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">
+                <div class="w3-panel w3-card w3-blue-gray">
+                    <h2 class="w3-center">LISTADO DE MOTIVOS</h2>
+                    <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                </div>
+                <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                    <div  style="width: 500px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                    <table style="border: 1px"> 
+                        <thead>
+                            <tr>
+                                <th  class="w3-white" style=" width: 5%;">Codigo</th>
+                                <th class="w3-white" style=" width: 30%;">Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="id_ConsultarTodosMotivo">
+                        </tbody>
+                    </table>  
+                </div>
+            </div>
+            <input type="text" id="filtrosMotivo" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroOrdenCompras();">
+            <button onclick="cerrarbuscadorMotivo();">
+                Cancelar
+            </button>
+        </center>
+    </div>
+    </div>
+
+    <div id="buscardormercaderias" class="w3-modal w3-white">
+        <div class="w3-container">
+            <center>
+                <div class="w3-panel w3-card-4 w3-padding-0" style=" width:800px; margin:0 auto;">
+                    <div class="w3-panel w3-card w3-blue-gray">
+                        <h2 class="w3-center">LISTADO DE MERCADERIAS</h2>
+                        <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                    </div>
+                    <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                        <div  style="width: 700px; height: 200px;" onclick="document.getElementById('id_condicion').focus();"/>
+                        <table style="border: 1px"> 
+                            <thead>
+                                <tr>
+                                    <th  style=" width: 5%;">Codigo</th>
+                                    <th  style=" width: 30%;">Nombre</th>
+                                    <th  style=" width: 30%;">Cantidad Existente</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crpTbmercaderias">
+                            </tbody>
+                        </table>  
+                    </div>
+                </div>
+                <input type="text" id="filtrosmercaderias" placeholder="Buscar..." size="45" tabindex="2" onkeyup="FiltroMercaderiasAjus();">
+                <button onclick="cerrarbuscadorMercaderia();">
+                    Cancelar
+                </button>
+            </center>
+        </div>
+    </div>
+
+
+    <script>
+        mydate = new Date();
+        myday = mydate.getDay();
+        mymonth = mydate.getMonth();
+        myweekday = mydate.getDate();
+        var ano = mydate.getFullYear();
+
+        weekday = myweekday;
+
+        if (mymonth === 0)
+            month = "01";
+
+        else if (mymonth === 1)
+            month = "02";
+
+        else if (mymonth === 2)
+            month = "03";
+
+        else if (mymonth === 3)
+            month = "04";
+
+        else if (mymonth === 4)
+            month = "05";
+
+        else if (mymonth === 5)
+            month = "06";
+
+        else if (mymonth === 6)
+            month = "07";
+
+        else if (mymonth === 7)
+            month = "08";
+
+        else if (mymonth === 8)
+            month = "09";
+
+        else if (mymonth === 9)
+            month = "10";
+
+        else if (mymonth === 10)
+            month = "11";
+
+        else if (mymonth === 11)
+            month = "12";
+
+        //            document.write("<font face=arial, size=3>" + day);
+        var accion = (myweekday + "-" + month + "-" + ano);
+        document.getElementById('fecha_ajuste').value = accion;
+    </script>
+
+</body>
+</html>

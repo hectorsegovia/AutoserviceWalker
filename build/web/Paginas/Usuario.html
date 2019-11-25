@@ -1,0 +1,179 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  href="../Recursos/CSS/w3_4.css"/>
+        <script src="../Recursos/JS/Usuariojs.js"></script>
+        <script src="../Recursos/JS/jquery-3.2.1.min.js"></script>
+    </head>
+    <!--<body style="background-color: #00bcd4">-->
+    <body>
+        <script>
+            function sololetras(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "  áéíóúqwertyuiopasdfghjklñzxcvbnm";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+
+        <script>
+            function SoloNumPositivos(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = "0123456789";
+                especiales = [8, 37, 39, 46];
+
+                tecla_especial = false;
+                for (var i in especiales) {
+                    if (key === especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) === -1 && !tecla_especial)
+                    return false;
+            }
+        </script>
+        <br>
+        <div class="pl-light-grey" id="_geco_sticky_main"><div class="w3-container w3-white" id="cont_registrar" style=" margin:0 3% 3% 3%;">
+                <form class="w3-container">
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width:700px; margin:0 auto;">
+                        <div class="w3-panel w3-card w3-blue-grey">
+
+                            <h2 class="w3-center">REGISTRO DE USUARIOS</h2>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                            <div class="w3-container"><div class="w3-row w3-section">
+                                    <button class="w3-button w3-large" onclick="document.getElementById('id01').style.display = 'block'; filtroempleadosfocus();">
+                                        Buscar
+                                    </button>
+                                    <br>
+                                    <div class="w3-col" style=" width:30%;">
+
+                                        <p class="w3-small w3-right">
+                                            <label class="w3-label w3-validate">ID:&nbsp;</label>
+                                        </p>
+
+                                    </div>
+                                    <div class="w3-rest" onkeypress="return SoloNumPositivos(event)">
+                                        <input class="w3-input" type="text" id="id_usuario" name="id" placeholder="Ingrese el Codigo..." size="80" onkeypress="
+                                                if (event.keyCode === 13) {
+                                                    recuperarUsuariosUnico();
+                                                }" tabindex="2" value required >
+                                    </div>
+                                </div>
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Nombre:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest" onkeypress="return sololetras(event)">
+                                    <input class="w3-input" type="text" id="nombre"  name="nombre" placeholder="Nombre..." size="80" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('clave').focus();
+                                            }" tabindex="2" value required><br>
+                                </div>
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Clave:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest">
+                                    <input class="w3-input" type="password" id="clave" onkeypress="
+                                            if (event.keyCode === 13) {
+                                                document.getElementById('id_perfil').focus();
+                                            }" placeholder="Clave..." size="80" tabindex="2" value required><br>
+                                </div>
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Perfil:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest">
+                                    <select class="w3-input w3-border" id="id_perfil"></select><br>   
+                                </div>
+                                <div class="w3-col" style=" width:30%;">
+                                    <p class="w3-small w3-right">
+                                        <label class="w3-label w3-validate">Empleados:&nbsp;</label>
+                                    </p>
+                                </div>
+                                <div class="w3-rest">
+                                    <select class="w3-input w3-border" id="id_empleados"></select>
+                                </div>
+                            </div></div>       
+                    <center>
+<!--                        <div class="w3-panel w3-card-4 w3-padding-0" style=" width:700px; margin:0 auto;">-->
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="agregarUsuario();" id="opc_cancelar" name="opc_cancelar">
+                                <i class="fa fa-close fa-lg"></i>
+                                Agregar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" onclick="document.getElementById('id01').style.display = 'block'; modificarUsuario(); filtrousuariofocuss()" type="button">
+                                <i class="fa fa-close fa-lg"></i>
+                                Modificar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="document.getElementById('id01').style.display = 'block'; eliminarUsuario(); filtrousuariofocuss()">
+                                <i class="fa fa-close fa-lg"></i>
+                                Eliminar
+                            </button>
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="grabarUsuario();">
+                                <i class="fa fa-close fa-lg"></i>
+                                Guardar
+                            </button> 
+                            <button class="w3-btn  w3-ripple w3-white  w3-left w3-hover-red w3-large" type="button"  onclick="limpiee();">
+                                <i class="fa fa-close fa-lg"></i>
+                                Cancelar
+                            </button>
+                    </center>
+                        </div>
+            </div>
+            </div>
+        </div>
+        <div id="id01" class="w3-modal">
+            <div class="w3-container">
+                <center>
+                    <div class="w3-panel w3-card-4 w3-padding-0" style=" width:600px; margin:0 auto;">
+                        <div class="w3-panel w3-card w3-blue">
+                            <h2 class="w3-center">REGISTRO DE USUARIOS</h2>
+                            <p class="w3-center w3-small">Ingrese los datos solicitados y luego haga clic en "Guardar".</p>
+                        </div>
+                        <div class="w3-container w3-white" id="cont_datos" style=" margin:0 5% 3% 5%;">
+                            <div  style="width: 500px; height: 200px;" onclick="document.getElementById('id_usuario').focus();"/>
+                            <table style="border: 1px " > 
+                                <thead>
+                                    <tr>
+                                        <th class="w3-blue-grey">Id</th>
+                                        <th class="w3-blue-grey">Nombre</th>
+                                        <th class="w3-blue-grey">Clave</th>
+                                        <th class="w3-blue-grey">Perfil</th>
+                                        <th class="w3-blue-grey">Empleados</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="crpTbUsuario">
+                                </tbody>
+                            </table>  
+                        </div>
+                    </div>
+                    <input type="text" id="filtrosusuario" placeholder="Buscar..." size="50" tabindex="2" onkeyup="FiltroUsuario();">
+                    <button onclick="cerrarbuscador();">
+                        Cancelar
+                    </button>
+            </div>
+        </div>
+    </body>
+</html>
+

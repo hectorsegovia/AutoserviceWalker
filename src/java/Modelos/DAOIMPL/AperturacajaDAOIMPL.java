@@ -89,7 +89,7 @@ public class AperturacajaDAOIMPL implements AperturacajaDAO {
             ps.setInt(2, dto.getId_usuario());
             ps.setDate(3, Genericos.Genericos.retornarFecha(dto.getFecha()));
             ps.setInt(4, dto.getMontototal());
-            ps.setDate(5, Genericos.Genericos.retornarFecha(dto.getFecha_cierre()));
+            ps.setDate(5, Genericos.Genericos.retornarFecha("2019-11-12"));
             ps.setString(6, dto.getEstado());
             ps.setInt(7, dto.getId_responsable());
             if (ps.executeUpdate() > 0) {

@@ -37,7 +37,28 @@ public class MercaderiaDTO {
     private Integer iva10;
     private Integer iva5;
     private Integer exenta;
+    private Integer cantidad_recibida;
+    private Integer id_recepcion;
 
+    public Integer getId_recepcion() {
+        return id_recepcion;
+    }
+
+    public void setId_recepcion(Integer id_recepcion) {
+        this.id_recepcion = id_recepcion;
+    }
+    
+    
+
+    public Integer getCantidad_recibida() {
+        return cantidad_recibida;
+    }
+
+    public void setCantidad_recibida(Integer cantidad_recibida) {
+        this.cantidad_recibida = cantidad_recibida;
+    }
+
+    
     public Integer getIva10() {
         return iva10;
     }

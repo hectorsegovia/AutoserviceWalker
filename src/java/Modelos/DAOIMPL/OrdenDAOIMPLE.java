@@ -68,16 +68,10 @@ public class OrdenDAOIMPLE implements OrdenDAO {
                             ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
                             return false;
                         }
-                        query = "UPDATE pedidos SET estado='FINALIZADO' where id_pedido=?;";
-                        ps = ConexionDB.getRutaConexion().prepareStatement(query);
-                        ps.setInt(1, dto.getId_pedido());
-                        if (ps.executeUpdate() <= 0) {
-                            ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
-                            return false;
-                        }
-                        ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
-                        return true;
+
                     }
+                    ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
+                    return true;
                 }
 
             } else {
@@ -348,7 +342,7 @@ public class OrdenDAOIMPLE implements OrdenDAO {
                 lista.add(dto);
             }
             return lista;
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
         }
@@ -356,12 +350,50 @@ public class OrdenDAOIMPLE implements OrdenDAO {
 
     @Override
     public boolean aprobarorden(OrdenDTO dto) {
- try {
+        try {
             ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
             query = "Update orden_compras set estado='APROBADO' where id_ordencompra=?";
             ps = ConexionDB.getRutaConexion().prepareStatement(query);
             ps.setInt(1, dto.getId_orden());
             if (ps.executeUpdate() > 0) {
+                query = "UPDATE pedidos SET estado='FINALIZADO' where id_pedido=?;";
+                ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                ps.setInt(1, dto.getId_pedido());
+                if (ps.executeUpdate() <= 0) {
+                    ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                    return false;
+                }
+                int idrecepcion;
+                ConexionDB.Transaccion(ConexionDB.TR.INICIAR);
+                query = "INSERT INTO recepciones(fecha, id_ordencompra, id_usuario, descripcion, estado)\n"
+                        + "VALUES (?, ?, ?, ?, ?);";
+                ps = ConexionDB.getRutaConexion().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps.setDate(1, Genericos.Genericos.retornarFecha(dto.getFecha()));
+                ps.setInt(2, dto.getId_orden());
+                ps.setInt(3, dto.getId_usuario());
+                ps.setString(4, dto.getObservacion());
+                ps.setString(5, "PENDIENTE");
+                if (ps.executeUpdate() > 0) {
+                    rs = ps.getGeneratedKeys();
+                    if (rs.next()) {
+                        idrecepcion = rs.getInt("id_recepcion");
+                        for (MercaderiaDTO item : dto.getLista_mercaderias()) {
+                            query = "INSERT INTO detalle_recepciones(id_recepcion, codigo_barra, cantidad, cantidad_recibida)\n"
+                                    + "VALUES (?, ?, ?, ?);";
+                            ps = ConexionDB.getRutaConexion().prepareStatement(query);
+                            ps.setInt(1, idrecepcion);
+                            ps.setString(2, item.getId_mercaderia());
+                            ps.setInt(3, item.getCantidad());
+                            ps.setInt(4, 0);
+                            if (ps.executeUpdate() <= 0) {
+                                ConexionDB.Transaccion(ConexionDB.TR.CANCELAR);
+                                return false;
+                            }
+                        }
+                        ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
+                        return true;
+                    }
+                }
                 ConexionDB.Transaccion(ConexionDB.TR.CONFIRMAR);
                 return true;
             } else {
